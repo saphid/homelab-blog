@@ -21,7 +21,7 @@ These posts are an attempt to capture the snapshot: what's running, what was bui
 |--------|------|--------|
 | [NurseDroid]({% post_url 2026-03-02-nursedroid-home-server %}) | Central home server (Docker-based) | Stable, 11 containers |
 | [Kitchen Screen]({% post_url 2026-03-02-kitchen-screen-dashboard %}) | Wall-mounted family dashboard | Fully operational |
-| [Orange Pi RV2]({% post_url 2026-03-02-orange-pi-edge-device %}) | Edge compute node (RISC-V) | Offline / powered down |
+| [Orange Pi RV2]({% post_url 2026-03-02-orange-pi-edge-device %}) | Edge compute & monitoring node (RISC-V) | Online, monitoring stack active |
 | [Home Assistant]({% post_url 2026-03-02-home-assistant-smart-home %}) | Smart home automation hub | Running, 264 sensors |
 
 ## The AI Agent Ecosystem
