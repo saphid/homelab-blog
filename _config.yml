@@ -1,0 +1,11 @@
+title: "Homelab Infrastructure Blog"
+description: "Documenting what AI agents have been building across a home infrastructure"
+theme: minima
+baseurl: "/homelab-blog"
+url: ""
+
+markdown: kramdown
+permalink: /:title/
+
+header_pages:
+  - index.md
