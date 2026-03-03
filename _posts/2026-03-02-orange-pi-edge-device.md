@@ -63,14 +63,6 @@ The Orange Pi serves as a **distributed monitoring and edge compute node**. Rath
 
 This distributed approach means no single device is a bottleneck. The Orange Pi's 8 cores and 8GB RAM handle the monitoring stack comfortably — current memory usage sits around 1GB with 5.4GB free.
 
-## TermuxFloor — The Mobile Compute Node
-
-Worth mentioning alongside the Orange Pi is another edge device: an Android phone running Termux (a Linux terminal emulator for Android). This device operates as a mobile compute node on the network.
-
-Like the Orange Pi, it represents the idea of distributing compute across multiple small devices rather than centralizing everything on one server. Android + Termux provides a surprisingly capable Linux environment, with access to Python, Node.js, and other development tools.
-
-Both devices point to a broader infrastructure philosophy: **compute should be distributed, not centralized**.
-
 ## Current State
 
 The device is **online and stable**, running Ubuntu 24.04 LTS on RISC-V with 17GB of its 57GB eMMC in use. All services are active. The load average hovers around 3.2 across 8 cores, suggesting the monitoring and AI workloads keep it moderately busy.
