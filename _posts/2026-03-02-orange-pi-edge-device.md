@@ -10,7 +10,7 @@ I won this in a Home Assistant AUNZ competition. It's a RISC-V single-board comp
 
 ## The Hardware
 
-The Orange Pi RV2 runs a SpacemiT K1 processor with 8 RISC-V cores at 1.6 GHz. It's a different architecture from the ARM Pi 5 in the kitchen — RISC-V is open-source, less mature, but getting better fast. See [my comparison of the two]({{ site.baseurl }}{% post_url 2026-03-02-pi5-vs-orangepi-rv2 %}).
+The Orange Pi RV2 runs a SpacemiT K1 processor with 8 RISC-V cores at 1.6 GHz. It's a different architecture from the ARM Pi 5 in the kitchen — RISC-V is open-source, less mature, but getting better fast. See [my comparison of the two]({{ "/pi5-vs-orangepi-rv2/" | relative_url }}).
 
 It runs Ubuntu 24.04 LTS with a 6.6 kernel, booting from the onboard 58 GB eMMC rather than an SD card.
 
@@ -46,4 +46,4 @@ Online and stable. Doing the job it was given. The RISC-V ecosystem has a few ro
 
 ---
 
-*Setup guide: [How to set up an Orange Pi RV2]({{ site.baseurl }}{% post_url 2026-03-02-orange-pi-setup-guide %})*
+*Setup guide: [How to set up an Orange Pi RV2]({{ "/orange-pi-setup-guide/" | relative_url }})*

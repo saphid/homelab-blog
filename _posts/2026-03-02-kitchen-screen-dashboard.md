@@ -44,4 +44,4 @@ Fully running. We glance at it every morning. Photos cycle, calendar shows what'
 
 ---
 
-*Setup guide: [How to build your own kitchen dashboard]({{ site.baseurl }}{% post_url 2026-03-02-kitchen-screen-setup-guide %})*
+*Setup guide: [How to build your own kitchen dashboard]({{ "/kitchen-screen-setup-guide/" | relative_url }})*

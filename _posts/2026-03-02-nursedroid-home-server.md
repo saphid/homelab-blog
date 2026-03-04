@@ -56,4 +56,4 @@ Stable. All 11 containers running. Clawdbot continues its overnight work cycles.
 
 ---
 
-*Setup guide: [How to build a Docker home server like this]({{ site.baseurl }}{% post_url 2026-03-02-nursedroid-setup-guide %})*
+*Setup guide: [How to build a Docker home server like this]({{ "/nursedroid-setup-guide/" | relative_url }})*

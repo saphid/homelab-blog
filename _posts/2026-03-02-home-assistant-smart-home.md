@@ -57,4 +57,4 @@ Running and actively used daily. The main growth areas are weather-based automat
 
 ---
 
-*Setup guide: [How to set up HA integrations]({{ site.baseurl }}{% post_url 2026-03-02-home-assistant-setup-guide %})*
+*Setup guide: [How to set up HA integrations]({{ "/home-assistant-setup-guide/" | relative_url }})*

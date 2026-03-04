@@ -13,21 +13,21 @@ This site documents what happened. Part infrastructure blog, part build log, par
 
 | Device | What It Does | Status |
 |--------|-------------|--------|
-| [NurseDroid]({{ site.baseurl }}{% post_url 2026-03-02-nursedroid-home-server %}) | Docker home server — media, photos, monitoring | Stable, 11 containers |
-| [Kitchen Screen]({{ site.baseurl }}{% post_url 2026-03-02-kitchen-screen-dashboard %}) | Wall-mounted Raspberry Pi 5 dashboard | Fully running |
-| [Orange Pi RV2]({{ site.baseurl }}{% post_url 2026-03-02-orange-pi-edge-device %}) | RISC-V monitoring node | Online |
-| [Termux Clawd]({{ site.baseurl }}{% post_url 2026-03-02-termux-clawd-pixel-phone %}) | Repurposed Pixel phone | Online |
-| [Home Assistant]({{ site.baseurl }}{% post_url 2026-03-02-home-assistant-smart-home %}) | Smart home hub, 264 sensors | Running |
-| [Pi 5 vs Orange Pi RV2]({{ site.baseurl }}{% post_url 2026-03-02-pi5-vs-orangepi-rv2 %}) | Head-to-head comparison | Reference |
+| [NurseDroid]({{ "/nursedroid-home-server/" | relative_url }}) | Docker home server — media, photos, monitoring | Stable, 11 containers |
+| [Kitchen Screen]({{ "/kitchen-screen-dashboard/" | relative_url }}) | Wall-mounted Raspberry Pi 5 dashboard | Fully running |
+| [Orange Pi RV2]({{ "/orange-pi-edge-device/" | relative_url }}) | RISC-V monitoring node | Online |
+| [Termux Clawd]({{ "/termux-clawd-pixel-phone/" | relative_url }}) | Repurposed Pixel phone | Online |
+| [Home Assistant]({{ "/home-assistant-smart-home/" | relative_url }}) | Smart home hub, 264 sensors | Running |
+| [Pi 5 vs Orange Pi RV2]({{ "/pi5-vs-orangepi-rv2/" | relative_url }}) | Head-to-head comparison | Reference |
 
 ## Build Guides
 
 I've written up how each device was set up — what the agent did, what I had to do manually, and what you'd need to know to build something similar:
 
-- [Docker Home Server Guide]({{ site.baseurl }}{% post_url 2026-03-02-nursedroid-setup-guide %})
-- [Kitchen Dashboard Guide]({{ site.baseurl }}{% post_url 2026-03-02-kitchen-screen-setup-guide %})
-- [Orange Pi RV2 Monitoring Node Guide]({{ site.baseurl }}{% post_url 2026-03-02-orange-pi-setup-guide %})
-- [Home Assistant Integration Guide]({{ site.baseurl }}{% post_url 2026-03-02-home-assistant-setup-guide %})
+- [Docker Home Server Guide]({{ "/nursedroid-setup-guide/" | relative_url }})
+- [Kitchen Dashboard Guide]({{ "/kitchen-screen-setup-guide/" | relative_url }})
+- [Orange Pi RV2 Monitoring Node Guide]({{ "/orange-pi-setup-guide/" | relative_url }})
+- [Home Assistant Integration Guide]({{ "/home-assistant-setup-guide/" | relative_url }})
 
 ## The Agents
 
