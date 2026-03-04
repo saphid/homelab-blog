@@ -1,15 +1,10 @@
 title: "Saphid"
 description: "Infrastructure, agents, and links"
-theme: minima
 baseurl: "/homelab-blog"
 url: ""
 
 markdown: kramdown
 permalink: /:title/
 
-header_pages:
-  - index.md
-  - links.html
-
-minima:
-  skin: dark
+plugins:
+  - jekyll-seo-tag
