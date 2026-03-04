@@ -1,0 +1,11 @@
+.env
+*.pem
+*.key
+client-secret*.json
+credentials.json
+_site/
+.jekyll-cache/
+.bundle/
+vendor/
+.sass-cache/
+node_modules/
