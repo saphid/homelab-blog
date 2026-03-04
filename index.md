@@ -1,45 +1,44 @@
 ---
 layout: home
-title: "Home Infrastructure: What the AI Agents Built"
+title: Home
 ---
 
-# Home Infrastructure: What the AI Agents Built
+# My Homelab, Built by AI Agents
 
-Over the past few months, a small fleet of AI coding agents — Claude Code, OpenAI Codex, and an autonomous agent called Clawdbot (running via a framework called Wisp) — have been quietly building, configuring, and maintaining a home infrastructure for a young family in Australia.
+I've been running an experiment: giving AI coding agents access to my home infrastructure and seeing what they build. Over the past couple of months, Claude Code, Codex, and an autonomous agent called Clawdbot have been setting up servers, building dashboards, configuring monitoring, and even writing family safety plans — all while I go about my day job and family life.
 
-This blog series documents what they built, how they approached problems, and what the current state of each device looks like. Think of it as a device audit, written up for anyone curious about what happens when you give AI agents SSH access and a to-do list.
+This site documents what happened. Part infrastructure blog, part build log, part "what happens when you let AI loose on your network."
 
-## Why Document This?
+## The Setup
 
-Home infrastructure has a way of growing organically. A media server here, a dashboard there, a smart home hub controlling the blinds. When AI agents are doing the building, the pace accelerates — but documentation often doesn't keep up.
+| Device | What It Does | Status |
+|--------|-------------|--------|
+| [NurseDroid]({% post_url 2026-03-02-nursedroid-home-server %}) | Docker home server — media, photos, monitoring | Stable, 11 containers |
+| [Kitchen Screen]({% post_url 2026-03-02-kitchen-screen-dashboard %}) | Wall-mounted Raspberry Pi 5 dashboard | Fully running |
+| [Orange Pi RV2]({% post_url 2026-03-02-orange-pi-edge-device %}) | RISC-V monitoring node | Online |
+| [Termux Clawd]({% post_url 2026-03-02-termux-clawd-pixel-phone %}) | Repurposed Pixel phone | Online |
+| [Home Assistant]({% post_url 2026-03-02-home-assistant-smart-home %}) | Smart home hub, 264 sensors | Running |
+| [Pi 5 vs Orange Pi RV2]({% post_url 2026-03-02-pi5-vs-orangepi-rv2 %}) | Head-to-head comparison | Reference |
 
-These posts are an attempt to capture the snapshot: what's running, what was built by whom, and what's next. Each device has an overview post (what it is and how it got built) and a setup guide (how to reproduce it, with both agent-assisted and manual approaches).
+## Build Guides
 
-## The Devices
+I've written up how each device was set up — what the agent did, what I had to do manually, and what you'd need to know to build something similar:
 
-| Device | Role | Status |
-|--------|------|--------|
-| [NurseDroid]({% post_url 2026-03-02-nursedroid-home-server %}) | Central home server (Docker-based) | Stable, 11 containers |
-| [Kitchen Screen]({% post_url 2026-03-02-kitchen-screen-dashboard %}) | Wall-mounted family dashboard | Fully operational |
-| [Orange Pi RV2]({% post_url 2026-03-02-orange-pi-edge-device %}) | Edge compute & monitoring node (RISC-V) | Online, monitoring stack active |
-| [Termux Clawd]({% post_url 2026-03-02-termux-clawd-pixel-phone %}) | Pixel Phone compute node | Online, sensors available |
-| [Home Assistant]({% post_url 2026-03-02-home-assistant-smart-home %}) | Smart home automation hub | Running, 264 sensors |
+- [Docker Home Server Guide]({% post_url 2026-03-02-nursedroid-setup-guide %})
+- [Kitchen Dashboard Guide]({% post_url 2026-03-02-kitchen-screen-setup-guide %})
+- [Orange Pi RV2 Monitoring Node Guide]({% post_url 2026-03-02-orange-pi-setup-guide %})
+- [Home Assistant Integration Guide]({% post_url 2026-03-02-home-assistant-setup-guide %})
 
-## Setup Guides
+## The Agents
 
-Each device also has a setup guide covering the agent-assisted approach and manual steps:
+Three agents have been doing the work:
 
-- [Setting Up a Docker Home Server]({% post_url 2026-03-02-nursedroid-setup-guide %})
-- [Setting Up a Kitchen Dashboard]({% post_url 2026-03-02-kitchen-screen-setup-guide %})
-- [Setting Up an Orange Pi RV2 Monitoring Node]({% post_url 2026-03-02-orange-pi-setup-guide %})
-- [Setting Up Home Assistant Integrations]({% post_url 2026-03-02-home-assistant-setup-guide %})
+**Claude Code** — Anthropic's coding CLI. I use it interactively for debugging, planning, and audits. It's writing this documentation.
 
-## The AI Agent Ecosystem
+**Codex** — OpenAI's agent. Built the entire kitchen dashboard in a day. Also handled the Orange Pi's storage migration.
 
-Three main agents have been working across this infrastructure:
+**Clawdbot** — An autonomous agent running overnight on NurseDroid via a framework called Wisp. It picks tasks from a backlog, keeps its own diary, and resurrects itself if it crashes. It decided on its own to prioritise family safety documentation over tech projects, which I thought was pretty interesting.
 
-- **Claude Code** — Anthropic's CLI coding agent. Used interactively for planning, debugging, and infrastructure audits. Currently running this documentation effort.
-- **Codex** — OpenAI's coding agent. Built the entire kitchen dashboard in a single-day session, handling everything from camera proxy engineering to OAuth flows. Also handled the Orange Pi eMMC migration.
-- **Clawdbot / Wisp** — An autonomous agent framework running on the home server. Operates overnight, picks tasks from a backlog, syncs its own memory, and has self-resurrection capabilities via cron. Set up the Pixel Phone as a compute node. Notably prioritized family safety documentation over tech projects.
+## Links
 
-Each post dives into a specific device, what's running on it, what the agents built, and — importantly — the journey of building it: the dead ends, the pivots, and the decisions that shaped the result.
+I also keep a [collection of interesting links](/homelab-blog/links.html) — stuff I've come across that's worth sharing.

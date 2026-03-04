@@ -1,5 +1,5 @@
-title: "Homelab Infrastructure Blog"
-description: "Documenting what AI agents have been building across a home infrastructure"
+title: "Saphid"
+description: "Infrastructure, agents, and links"
 theme: minima
 baseurl: "/homelab-blog"
 url: ""
@@ -9,3 +9,7 @@ permalink: /:title/
 
 header_pages:
   - index.md
+  - links.html
+
+minima:
+  skin: dark

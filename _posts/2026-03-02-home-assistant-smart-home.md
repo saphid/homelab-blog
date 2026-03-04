@@ -6,89 +6,55 @@ date: 2026-03-02
 
 # Home Assistant — The Smart Home Brain
 
-Home Assistant is the automation hub that ties the physical home together with the digital infrastructure. It's the most device-rich component of the setup, managing hundreds of sensors, lights, switches, and media players across the house.
+Home Assistant runs the physical house. Lights, blinds, cameras, climate control, media players, a smart keg freezer, and a bin reminder. It's not a toy setup — there are 264 sensors, 23 lights, 14 covers, 48 switches, and 17 media players. Everything runs locally, no cloud required.
 
-## Scale
+## What It Controls
 
-The numbers tell the story:
+**Climate** — AC zone control across the house. Individual rooms can be set to different temperatures, and temperature sensors feed into automations.
 
-| Category | Count |
-|----------|-------|
-| Sensors | 264 |
-| Lights | 23 |
-| Covers / Blinds | 14 |
-| Switches | 48 |
-| Media Players | 17 |
+**Security** — Video doorbell with live feeds and motion alerts. Two security cameras that stream to the kitchen dashboard via a proxy.
 
-This isn't a token smart home setup — it's a comprehensive system where most controllable devices in the house are integrated.
+**Blinds** — 14 motorised covers and blinds, controllable by automation, schedule, or voice.
 
-## Notable Integrations
+**Media** — 17 media players distributed around the house. Music and video controllable from HA dashboards.
 
-### Climate Control
-- **AC zone control** — Individual zones can be managed, allowing different temperatures in different rooms
-- Temperature monitoring across the house feeds into automations
+**Household** — A smart keg freezer (temperature-monitored beer keg, because why not), and bin reminders that tell us which bins go out on collection day.
 
-### Security & Awareness
-- **Video doorbell** — Live feed and motion alerts
-- **Security cameras** — Feeds are shared with the kitchen dashboard via a proxy (see the Kitchen Screen post)
+**Voice** — A fully local voice assistant stack: Whisper for speech-to-text and Piper for text-to-speech. No audio leaves the network. I'm running both as HA add-ons.
 
-### Household Utilities
-- **Smart keg freezer** — Temperature-monitored beer keg setup (yes, really)
-- **Bin reminder** — Automated reminders for which bins to put out on collection day
-- **Cover/blind control** — 14 motorized blinds and covers, controllable by automation or voice
+## What the Agents Built
 
-### Media
-- **17 media players** — Distributed audio and video across the house, controllable through HA dashboards and automations
+### Camera Integration
 
-### Voice Assistant
-- **Whisper** — Speech-to-text, running locally (no cloud dependency)
-- **Piper** — Text-to-speech, also running locally
-- Together they provide a fully local voice assistant pipeline — voice commands are processed on-device without sending audio to external servers
+The bridge between HA cameras and the kitchen dashboard was an agent project. HA exposes camera streams via its API, but getting MJPEG feeds to display in a browser on a different device means dealing with CORS and authentication. Codex built a Python proxy that authenticates to HA server-side and re-serves the streams. It also validates MJPEG frames and handles reconnection when cameras drop.
 
-## What the AI Agents Built
+### Bushfire Safety
 
-### Camera API Integration
+We live in Australia, so bushfire preparedness is real. Clawdbot built a structured evacuation plan with HA triggers:
 
-The AI agents built the bridge between Home Assistant's camera feeds and the kitchen dashboard. Home Assistant exposes camera streams via its API, but getting those streams to display reliably on the kitchen screen required:
+- Temperature and wind speed sensors trigger alerts when conditions get dangerous
+- Notifications go to phones and the kitchen dashboard
+- A checklist automation tracks evacuation steps
 
-- A proxy service to handle authentication and CORS
-- Frame validation to catch corrupted MJPEG data
-- Reconnection logic for when cameras temporarily drop
-
-This integration is what makes the "camera panel" on the kitchen dashboard work.
-
-### Bushfire Evacuation Plan
-
-Given the Australian location, bushfire preparedness is a real concern. The AI agents created a bushfire evacuation plan with Home Assistant triggers:
-
-- **Monitoring**: Temperature and wind speed sensors can trigger alerts when conditions become dangerous
-- **Notification flow**: Alerts pushed to phones and the kitchen dashboard
-- **Checklist automation**: A structured evacuation checklist that can be triggered and tracked through HA
-
-This is another example of the autonomous agent (Clawdbot) prioritizing family safety over tech projects — it chose to build this before working on other infrastructure tasks.
+This was something Clawdbot chose to build on its own — it prioritised family safety over the tech projects I'd listed.
 
 ### Planned Automations
 
-Several automations are in the pipeline:
-
-- **Morning routine scenes** — Coordinated light, blind, and media activation for the household's wake-up routine
-- **Temperature/wind monitoring alerts** — Proactive notifications when weather conditions warrant attention
-- **Enhanced safety automations** — Building on the bushfire evacuation framework with additional family safety triggers
+Still on the to-do list:
+- Morning routine scenes (coordinated lights, blinds, and media for wake-up)
+- Weather monitoring alerts for temperature and wind
+- More family safety triggers building on the bushfire framework
 
 ## Architecture
 
-Home Assistant runs as its own instance (not containerized on NurseDroid). It communicates with devices via:
+HA runs on its own instance (not on NurseDroid). Devices connect via Zigbee (most sensors, lights, switches), WiFi (cameras, media players), and the local API (for integration with other infrastructure like the kitchen dashboard).
 
-- **Zigbee** — For most smart home devices (lights, sensors, switches)
-- **WiFi** — For cameras, media players, and some switches
-- **Local API** — For integration with other infrastructure components (like the kitchen dashboard)
-
-The key architectural principle: **everything runs locally**. Voice processing, automations, camera feeds — none of it depends on external cloud services. If the internet goes down, the smart home keeps working.
+The key principle: everything runs locally. Voice commands, automations, camera feeds — if the internet goes down, the house still works.
 
 ## Current State
 
-The system is stable and actively used daily. The main growth areas are:
+Running and actively used daily. The main growth areas are weather-based automations, routine scenes, and deeper integration with the AI agents — potentially letting Clawdbot trigger or respond to home events.
 
-- Expanding weather-based automations
-- Building out morning/evening routine scenes
-- Deeper integration between Home Assistant and the AI agent ecosystem (allowing agents to trigger or respond to home automations)
+---
+
+*Setup guide: [How to set up HA integrations]({% post_url 2026-03-02-home-assistant-setup-guide %})*

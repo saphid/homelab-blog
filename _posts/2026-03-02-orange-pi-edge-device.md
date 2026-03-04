@@ -6,65 +6,44 @@ date: 2026-03-02
 
 # Orange Pi RV2 — The Edge Device
 
-The Orange Pi RV2 is the infrastructure's edge compute node — a RISC-V single-board computer that extends monitoring and AI workloads beyond the central server. What started as an experimental board has grown into a capable secondary node running its own monitoring stack, database, and custom AI services.
+I won this in a Home Assistant AUNZ competition. It's a RISC-V single-board computer — 8 cores, 8 GB RAM, dual gigabit ethernet, and a 2 TOPS AI accelerator. It started as an experiment and ended up becoming a real monitoring node.
 
 ## The Hardware
 
-The Orange Pi RV2 is a RISC-V architecture SBC with an 8-core SpacemiT K1 processor and 8GB of RAM. Unlike the ARM-based Raspberry Pi in the kitchen, this board uses the RISC-V instruction set — an open-source CPU architecture that's gaining traction in the embedded and edge computing space.
+The Orange Pi RV2 runs a SpacemiT K1 processor with 8 RISC-V cores at 1.6 GHz. It's a different architecture from the ARM Pi 5 in the kitchen — RISC-V is open-source, less mature, but getting better fast. See [my comparison of the two]({% post_url 2026-03-02-pi5-vs-orangepi-rv2 %}).
 
-It runs Ubuntu 24.04 LTS with a 6.6-series kernel, giving it access to the standard Linux ecosystem despite the non-standard CPU architecture.
+It runs Ubuntu 24.04 LTS with a 6.6 kernel, booting from the onboard 58 GB eMMC rather than an SD card.
 
-### Storage: SD Card to eMMC Migration
+## The eMMC Migration
 
-The board originally booted from a large SD card. An AI agent (Codex) migrated the entire root filesystem to the onboard 58GB eMMC storage using the vendor's `nand-sata-install` tool — a cleaner approach than manual `dd` operations. The boot chain runs through SPI flash (which holds the bootloader) directly to eMMC, so the SD card is no longer needed.
+When I first set it up, it booted from a 512 GB SD card. Codex migrated the whole system to the onboard eMMC in a single session. Rather than doing a manual `dd` (risky on a RISC-V board with a non-standard boot chain), it found the vendor's built-in `nand-sata-install` tool and used that. Copied 321,250 files, updated the boot config, and verified everything came back up. The SD card isn't needed anymore.
+
+The boot chain on this board goes: SPI flash (holds U-Boot) → eMMC (kernel + rootfs). Clean separation between bootloader and OS.
 
 ## What's Running
 
-The Orange Pi is far from idle. It runs a full complement of services:
+This thing is doing real work now:
 
-### Monitoring Stack
-- **Prometheus** — Time-series metrics collection, running natively on RISC-V
-- **Grafana** — Dashboarding and visualization (RISC-V native build)
-- **Node Exporter** — Machine metrics for Prometheus
-- **Blackbox Exporter** — Endpoint probing
-- **SNMP Exporter** — Network device monitoring
+**Monitoring Stack** — Prometheus, Grafana (both running natively on RISC-V), node exporter, blackbox exporter, SNMP exporter. This handles the monitoring for the whole homelab, keeping that workload off NurseDroid.
 
-This gives the Orange Pi its own independent monitoring capability, separate from the main server's Grafana/Prometheus/Loki stack.
+**Database** — PostgreSQL 16. Stores Grafana dashboards and any structured data the monitoring stack needs.
 
-### Data & Network
-- **PostgreSQL 16** — Full relational database
-- **nfdump/nfcapd** — NetFlow capture and analysis for network traffic monitoring
-- **SNMP daemon** — Exposes the device's own metrics to network monitoring
+**Network Monitoring** — nfdump/nfcapd for NetFlow capture. With dual gigabit ethernet, this board is naturally suited to watching network traffic.
 
-### AI Services
-- **AI Mode API** — A custom service described as "AI mode control API (risk/person)" — an edge AI inference or control endpoint running directly on the RISC-V hardware
+**AI Services** — There's a custom "AI Mode API" service running — an edge AI endpoint running directly on the RISC-V hardware.
 
-### Security
-- **Fail2Ban** — Intrusion prevention
-- **Unattended Upgrades** — Automatic security patching
+**Security** — Fail2Ban for intrusion prevention, unattended upgrades for automatic patching.
 
-## The Setup Journey
+## Resource Usage
 
-The initial deployment was handled by AI agents across multiple sessions:
+With all that running, it uses about 1 GB of RAM out of 8 GB available. Load average sits around 3.2 across 8 cores, which is comfortably moderate. 17 GB of the 57 GB eMMC is in use.
 
-1. **OS deployment**: Ubuntu Noble Server image flashed to SD card and booted
-2. **SSH key exchange**: Configured for passwordless access from the network
-3. **Network integration**: Connected and given a static IP on the local network
-4. **eMMC migration**: Codex transferred the full system from SD to eMMC in a single session, verified the cutover, and confirmed all services survived the reboot
-5. **Service deployment**: Monitoring stack, PostgreSQL, and AI services deployed and configured
-
-## Architecture Role
-
-The Orange Pi serves as a **distributed monitoring and edge compute node**. Rather than running everything on the central server, the infrastructure splits workloads:
-
-- **NurseDroid** handles media, photos, containers, and the autonomous agent
-- **Orange Pi** handles network monitoring, metrics collection, and edge AI inference
-- **Home Assistant** handles automation and device control
-
-This distributed approach means no single device is a bottleneck. The Orange Pi's 8 cores and 8GB RAM handle the monitoring stack comfortably — current memory usage sits around 1GB with 5.4GB free.
+For a board that costs a fraction of a "real" server, that's solid.
 
 ## Current State
 
-The device is **online and stable**, running Ubuntu 24.04 LTS on RISC-V with 17GB of its 57GB eMMC in use. All services are active. The load average hovers around 3.2 across 8 cores, suggesting the monitoring and AI workloads keep it moderately busy.
+Online and stable. Doing the job it was given. The RISC-V ecosystem has a few rough edges — some packages don't have riscv64 builds and need compiling — but for the monitoring workload, everything I need works.
 
-Future growth areas include expanding the edge AI capabilities and potentially running distributed agent workloads to offload the main server.
+---
+
+*Setup guide: [How to set up an Orange Pi RV2]({% post_url 2026-03-02-orange-pi-setup-guide %})*

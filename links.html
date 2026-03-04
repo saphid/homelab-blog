@@ -1,0 +1,63 @@
+---
+layout: default
+title: Links
+---
+
+<style>
+  .links-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 24px; }
+  .link-card { display: grid; grid-template-columns: 200px 1fr; border: 1px solid #333; border-radius: 12px; overflow: hidden; background: #1a1a2e; }
+  .link-thumb { min-height: 140px; background: #111; display: block; }
+  .link-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .link-body { padding: 14px 16px; }
+  .link-domain { display: flex; align-items: center; gap: 8px; color: #888; font-size: 12px; margin-bottom: 6px; }
+  .link-domain img { width: 16px; height: 16px; border-radius: 4px; }
+  .link-body h3 { font-size: 17px; margin: 0 0 8px; }
+  .link-body h3 a { color: #62a5ff; text-decoration: none; }
+  .link-body h3 a:hover { text-decoration: underline; }
+  .link-body p { margin: 0 0 8px; color: #ccc; font-size: 14px; }
+  .link-meta { font-size: 12px; color: #666; }
+  @media (max-width: 700px) { .link-card { grid-template-columns: 1fr; } .link-thumb { height: 180px; } }
+</style>
+
+<h1>Links</h1>
+<p>Stuff I've come across that's interesting enough to save. Mostly AI agents, developer tools, and infrastructure.</p>
+
+<div class="links-grid">
+
+  <article class="link-card">
+    <a class="link-thumb" href="https://x.com/heynavtoor/status/2028922003365986705" target="_blank" rel="noopener">
+      <img src="https://pbs.twimg.com/media/HCgtzz0aUAA-oE9.jpg:large" alt="Nav Toor post" loading="lazy" />
+    </a>
+    <div class="link-body">
+      <div class="link-domain"><img src="https://abs.twimg.com/favicons/twitter.3.ico" alt="X"/>x.com</div>
+      <h3><a href="https://x.com/heynavtoor/status/2028922003365986705" target="_blank" rel="noopener">Nav Toor: agent bottleneck + browser control API</a></h3>
+      <p>Argument that a small local binary can remove major browser-automation friction for agents and make orchestration framework-agnostic.</p>
+      <div class="link-meta">Added: 2026-03-04</div>
+    </div>
+  </article>
+
+  <article class="link-card">
+    <a class="link-thumb" href="https://www.neverjust.net/" target="_blank" rel="noopener">
+      <img src="https://www.neverjust.net/twitter-image.png?fcfb5c7c48aa740e" alt="neverjust" loading="lazy" />
+    </a>
+    <div class="link-body">
+      <div class="link-domain"><img src="https://www.google.com/s2/favicons?domain=neverjust.net&sz=64" alt="neverjust"/>neverjust.net</div>
+      <h3><a href="https://www.neverjust.net/" target="_blank" rel="noopener">neverjust — better developer communication</a></h3>
+      <p>A practical writing reference for engineers: clarity over noise, especially in async and technical collaboration.</p>
+      <div class="link-meta">Added: 2026-03-04</div>
+    </div>
+  </article>
+
+  <article class="link-card">
+    <a class="link-thumb" href="https://x.com/artemxtech/status/2028330693659332615" target="_blank" rel="noopener">
+      <img src="https://pbs.twimg.com/media/HCYS1T7W0AAnTkm.jpg:large" alt="Artem post" loading="lazy" />
+    </a>
+    <div class="link-body">
+      <div class="link-domain"><img src="https://abs.twimg.com/favicons/twitter.3.ico" alt="X"/>x.com</div>
+      <h3><a href="https://x.com/artemxtech/status/2028330693659332615" target="_blank" rel="noopener">ArtemXTech: "Grep Is Dead" memory workflow</a></h3>
+      <p>Replacing brittle grep-only workflows with stronger memory and recall pipelines for long-running coding-agent sessions.</p>
+      <div class="link-meta">Added: 2026-03-04</div>
+    </div>
+  </article>
+
+</div>
