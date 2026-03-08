@@ -6,62 +6,58 @@ date: 2026-03-02
 
 # Termux Clawd — The Pixel Phone
 
-An old Pixel 3 that's no longer a phone. It runs Termux — a Linux terminal emulator for Android — and sits on the network as a compute node with a camera, sensors, and a battery backup.
+The Pixel phone is still one of the stranger parts of the setup, but the live audit made its role much clearer. It is not currently best described as a fully-general remote compute node. It is better described as an SSH-accessible Android sensor and Home Assistant bridge.
 
-## Why a Phone?
+## Verified Current State
 
-Phones have things that SBCs don't: a camera, GPS, accelerometer, cellular modem, and a battery that keeps running when the power goes out. An old phone you'd otherwise recycle turns into a sensor platform and emergency compute node for basically zero cost.
+The device is a Pixel 3 running Android 12 and reachable over Termux SSH.
 
-## What's Running
+During the audit I confirmed:
 
-**SSH server** — The primary interface. Everything else connects over SSH from other machines.
+- `sshd` is running
+- `android-ha-api.py` is running
+- `termux-sensor` sampling is active
+- the local Android API responds for battery, Wi-Fi, system, and sensor endpoints
 
-**OpenClaw node** — A distributed agent framework that connects back to NurseDroid's gateway. Clawdbot set this up so it could extend its reach to the phone. There's a limitation: Android doesn't support remote command execution through the framework without root, so SSH is the workaround.
+The phone also has:
 
-**Battery monitoring** — A cron job every 5 minutes that alerts at 20% and 10%. Logs to a file for trend analysis.
+- a `.ssh` directory
+- a `clawd` working area
+- an `.openclaw` directory
+- screenshot and logs directories
 
-**Screen capture** — Scheduled screenshots for visual monitoring. Each capture takes under 5 seconds and produces 2-3 MB images.
+## What It Actually Does Right Now
 
-## Termux:API
+The strongest current use case is the Home Assistant bridge.
 
-The real power is Termux:API, which exposes Android hardware to the command line:
+- the phone collects Android and sensor data locally
+- NurseDroid polls it
+- Home Assistant receives stable helper entities from that sync path
 
-```bash
-termux-battery-status      # Battery and charging state
-termux-camera-photo        # Take a photo (front or back)
-termux-location            # GPS coordinates
-termux-wifi-connectioninfo # WiFi signal info
-termux-torch on            # Flashlight
-termux-notification        # Send Android notifications
-termux-vibrate             # Haptic feedback
-```
+That is much more concrete than the older description of a broad OpenClaw node with lots of future possibilities.
 
-Scripts and agents can use the phone's sensors programmatically. Clawdbot already uses battery monitoring and screen capture.
+## What I Am Not Claiming Anymore
 
-## How It Got Set Up
+The previous version overstated some things.
 
-Clawdbot handled this across several work sessions:
+- I did not find live proof in this audit that the phone is currently operating as a full OpenClaw execution node.
+- I did not find a device crontab driving lots of scheduled work on-phone.
+- The useful operational logic seems to live mostly on NurseDroid, with the phone acting as the endpoint and sensor source.
 
-1. Installed the Termux SSH server and exchanged keys with NurseDroid
-2. Enabled wireless ADB for deeper Android access
-3. Deployed Node.js and the OpenClaw node module
-4. Installed Termux:API and tested each sensor endpoint
-5. Wrote the battery monitor and screen capture scripts
-6. Set up cron for periodic tasks
+That is still a good role. It is just a narrower and more accurate one.
 
-Clawdbot also researched community projects for Termux: SMS gateways for 2FA routing, AdGuard Home for DNS-level ad blocking, WireGuard for VPN, and Tasker integration for event-driven automation. Most of these are on the "maybe later" list.
+## Why the Phone Still Earns Its Place
 
-## Where It Fits
+Even in this reduced role, an old phone has a few advantages:
 
-The phone fills a niche nothing else can:
+- battery-backed runtime
+- real Android sensors
+- a camera
+- low power draw
+- a form factor that can stay attached to the network without asking for much
 
-- **Power outage sentinel** — When the power goes out, the phone keeps running on battery. Good candidate for alerting.
-- **Mobile sensors** — Camera and GPS accessible to automation scripts.
-- **Cellular fallback** — With a SIM, it could provide internet when the primary connection drops.
-- **Low power** — Draws far less than any other device in the setup.
-
-It's not replacing anything. It's extending the infrastructure into a form factor that goes places servers can't.
+For this lab, that is enough.
 
 ## Current State
 
-Online, SSH accessible, battery monitor running, Termux:API available. Next up is possibly AdGuard Home for network-wide ad blocking, and using the camera for specific automation triggers.
+The Pixel node is live and useful. The interesting thing is not that it might someday do everything. The interesting thing is that it already does one practical job well: turning a spare Android device into a sensor-producing endpoint that the rest of the homelab can consume.

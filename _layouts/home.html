@@ -5,22 +5,23 @@ layout: default
 <section class="page-hero" data-reveal>
   <div class="hero-grid">
     <div class="hero-copy">
-      <div class="eyebrow">Homelab field notes</div>
+      <div class="eyebrow">Verified homelab log</div>
       {{ content }}
       <div class="hero-actions">
-        <a class="button-pill primary" href="#recent-posts">Read the build log</a>
-        <a class="button-pill secondary" href="{{ '/links.html' | relative_url }}">Open saved links</a>
+        <a class="button-pill primary" href="#recent-posts">Read the posts</a>
+        <a class="button-pill secondary" href="{{ '/homelab-audit-snapshot-march-8-2026/' | relative_url }}">Open the audit snapshot</a>
       </div>
     </div>
     <aside class="hero-panel">
       <div class="signal-card">
-        <div class="eyebrow">Core stack</div>
-        <h3>The blog is about the machines, services, and household workflows that actually run here</h3>
-        <p>The home page should read like an index into the infrastructure itself: what runs where, what changed, and which notes are worth opening next.</p>
+        <div class="eyebrow">Audit note</div>
+        <h3>Current state and build history are no longer mixed together</h3>
+        <p>The earlier blog drafts blurred original build notes with present-day reality. The rewrite fixes that by checking the hosts, the running services, and the old Codex session logs side by side.</p>
         <div class="signal-list">
-          <div class="signal-row"><span class="signal-dot"></span><span class="signal-label">Primary node</span><span class="signal-value">Nursedroid</span></div>
+          <div class="signal-row"><span class="signal-dot"></span><span class="signal-label">Primary node</span><span class="signal-value">NurseDroid</span></div>
           <div class="signal-row"><span class="signal-dot"></span><span class="signal-label">Control surface</span><span class="signal-value">Kitchen Screen</span></div>
-          <div class="signal-row"><span class="signal-dot"></span><span class="signal-label">Night operator</span><span class="signal-value">Clawdbot</span></div>
+          <div class="signal-row"><span class="signal-dot"></span><span class="signal-label">Monitoring node</span><span class="signal-value">Orange Pi RV2</span></div>
+          <div class="signal-row"><span class="signal-dot"></span><span class="signal-label">Sensor bridge</span><span class="signal-value">Pixel 3 in Termux</span></div>
         </div>
       </div>
     </aside>
@@ -31,54 +32,54 @@ layout: default
   <article class="metric-card">
     <span class="metric-label">Posts</span>
     <span class="metric-value" data-count-to="{{ site.posts | size }}">0</span>
-    <p class="metric-note">Build logs and guides in the archive.</p>
+    <p class="metric-note">Audited notes, system writeups, and setup guides.</p>
   </article>
   <article class="metric-card">
     <span class="metric-label">Systems</span>
     <span class="metric-value" data-count-to="5">0</span>
-    <p class="metric-note">Nursedroid, Pi wall display, Orange Pi, Termux, HA.</p>
+    <p class="metric-note">NurseDroid, Kitchen Screen, Orange Pi, Termux Pixel, Home Assistant.</p>
   </article>
   <article class="metric-card">
-    <span class="metric-label">Sensors</span>
-    <span class="metric-value" data-count-to="264">0</span>
-    <p class="metric-note">Home Assistant entities wired into the setup.</p>
+    <span class="metric-label">HA Entities</span>
+    <span class="metric-value" data-count-to="1160">0</span>
+    <p class="metric-note">Live Home Assistant entity count from the March 8, 2026 audit.</p>
   </article>
   <article class="metric-card">
     <span class="metric-label">Containers</span>
-    <span class="metric-value" data-count-to="11">0</span>
-    <p class="metric-note">Current NurseDroid Docker footprint.</p>
+    <span class="metric-value" data-count-to="12">0</span>
+    <p class="metric-note">Currently running containers on NurseDroid at audit time.</p>
   </article>
 </section>
 
 <section class="section-grid">
   <article class="section-card" data-reveal>
-    <div class="eyebrow">Systems</div>
-    <h3>Machines with a job</h3>
-    <p>Each device in the homelab has a clear role and a linked operating note.</p>
+    <div class="eyebrow">Verified now</div>
+    <h3>What is definitely running</h3>
+    <p>The current state is grounded in live checks, not memory.</p>
     <ul>
-      <li><a href="{{ '/nursedroid-home-server/' | relative_url }}">NurseDroid</a> for the heavy services</li>
-      <li><a href="{{ '/kitchen-screen-dashboard/' | relative_url }}">Kitchen Screen</a> for family-facing state</li>
-      <li><a href="{{ '/orange-pi-edge-device/' | relative_url }}">Orange Pi RV2</a> for edge experiments</li>
+      <li><a href="{{ '/nursedroid-home-server/' | relative_url }}">NurseDroid</a> is running 12 containers plus the Clawd cron/system script layer.</li>
+      <li><a href="{{ '/orange-pi-edge-device/' | relative_url }}">Orange Pi RV2</a> is live on Ubuntu 24.04.4 with Prometheus, Grafana, PostgreSQL, exporters, and NetFlow capture.</li>
+      <li><a href="{{ '/kitchen-screen-dashboard/' | relative_url }}">Kitchen Screen</a> is a Pi 5 running the current <code>next-dashboard</code> stack.</li>
     </ul>
   </article>
   <article class="section-card" data-reveal>
-    <div class="eyebrow">Guides</div>
-    <h3>Repeatable build notes</h3>
-    <p>Each guide keeps the manual steps and the agent-driven steps visible, so the work is reproducible.</p>
+    <div class="eyebrow">Historical context</div>
+    <h3>How the systems got here</h3>
+    <p>The archived Codex sessions still matter, but they are now treated as build history rather than present-tense truth.</p>
     <ul>
-      <li><a href="{{ '/nursedroid-setup-guide/' | relative_url }}">Docker home server guide</a></li>
-      <li><a href="{{ '/kitchen-screen-setup-guide/' | relative_url }}">Kitchen dashboard guide</a></li>
-      <li><a href="{{ '/orange-pi-setup-guide/' | relative_url }}">Orange Pi setup guide</a></li>
+      <li>The kitchen screen started as a <code>fridge-dashboard</code> Flask app and later moved to a Next.js monorepo.</li>
+      <li>The Orange Pi moved from SD boot to eMMC and from “competition experiment” to real monitoring node.</li>
+      <li>The Termux phone shifted from OpenClaw ambitions to a practical Android sensor and HA bridge.</li>
     </ul>
   </article>
   <article class="section-card" data-reveal>
-    <div class="eyebrow">Agents</div>
-    <h3>Different agents, different operating styles</h3>
-    <p>Claude Code, Codex, and Clawdbot each pushed the homelab in a different direction, which is part of the point of the archive.</p>
+    <div class="eyebrow">Useful reading</div>
+    <h3>Start with the pages that have the clearest ground truth</h3>
+    <p>If you want the most accurate picture of the setup, start with the live-audited pages and then read the guides.</p>
     <ul>
-      <li>Claude Code for audits and planning</li>
-      <li>Codex for fast product delivery</li>
-      <li>Clawdbot for unattended overnight execution</li>
+      <li><a href="{{ '/homelab-audit-snapshot-march-8-2026/' | relative_url }}">Homelab audit snapshot</a></li>
+      <li><a href="{{ '/home-assistant-smart-home/' | relative_url }}">Home Assistant</a> and the <a href="{{ '/home-assistant-setup-guide/' | relative_url }}">integration guide</a></li>
+      <li><a href="{{ '/termux-clawd-pixel-phone/' | relative_url }}">Termux Pixel phone</a> for the Android sensor bridge</li>
     </ul>
   </article>
 </section>
@@ -90,7 +91,7 @@ layout: default
         <div class="eyebrow">Archive</div>
         <h2>Recent posts</h2>
       </div>
-      <p>The latest infrastructure notes, setup guides, and system writeups.</p>
+      <p>The long-form notes now bias toward accuracy and scope, not toward telling the cleanest possible story.</p>
     </div>
     <ul class="post-list">
       {% for post in site.posts %}
@@ -107,11 +108,10 @@ layout: default
     </ul>
   </div>
   <aside class="reading-panel" data-reveal>
-    <div class="eyebrow">Saved links</div>
-    <h3>Useful entry points</h3>
-    <p>Open the supporting links page for external tools, dashboards, services, and references that sit around the homelab.</p>
-    <p><a href="{{ '/links.html' | relative_url }}">Go to links</a></p>
-    <div class="eyebrow" style="margin-top:1.5rem;">About the build</div>
-    <p>The story of how the blog itself was redesigned can live as a post in the archive, not as the main subject of the home page.</p>
+    <div class="eyebrow">Quick links</div>
+    <h3>Content first, chrome second</h3>
+    <p>The blog is now organized around the actual infrastructure and the notes that explain it.</p>
+    <p><a href="{{ '/nursedroid-home-server/' | relative_url }}">NurseDroid</a><br><a href="{{ '/kitchen-screen-dashboard/' | relative_url }}">Kitchen Screen</a><br><a href="{{ '/orange-pi-edge-device/' | relative_url }}">Orange Pi RV2</a><br><a href="{{ '/termux-clawd-pixel-phone/' | relative_url }}">Termux Pixel</a><br><a href="{{ '/home-assistant-smart-home/' | relative_url }}">Home Assistant</a><br><a href="{{ '/links.html' | relative_url }}">Saved links</a></p>
+    <p>The March 8, 2026 audit checked live hosts, local cron/system services, and archived Codex sessions before these pages were rewritten.</p>
   </aside>
 </section>

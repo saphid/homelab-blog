@@ -6,53 +6,76 @@ date: 2026-03-02
 
 # NurseDroid — The Home Server
 
-NurseDroid is an Intel small form factor PC running Ubuntu with everything in Docker. It's the centre of the homelab — media, photos, monitoring, and an AI agent that works overnight while I sleep.
+NurseDroid is still the center of the homelab, but the cleaner thing to say is this: it is the mixed-use box where the media services, sync services, helper apps, and Clawd automation glue live.
 
-## What's Running
+## Verified Current State
 
-Eleven Docker containers, roughly grouped:
+At audit time, NurseDroid was running 12 Docker containers:
 
-**Media & Books** — Plex for streaming, Transmission for downloads, Calibre for ebooks.
+- `immich_importer`
+- `immich_machine_learning`
+- `immich_server`
+- `immich_postgres`
+- `immich_redis`
+- `network-grafana`
+- `markdown-viewer`
+- `syncthing`
+- `portainer`
+- `freshrss`
+- `calibre`
+- `transmission`
 
-**Photos** — Immich, which is basically self-hosted Google Photos. It does face recognition and smart search via an ML container. Four containers total: the app server, ML worker, Postgres (with vector extensions for similarity search), and Valkey for caching.
+That list already fixes one older drift: the previous blog version said 11 containers and described a simpler service mix than the machine is actually running today.
 
-**Monitoring** — Grafana for dashboards. Prometheus actually runs on the Orange Pi rather than here, which keeps the monitoring workload distributed.
+## What Lives Here
 
-**Everything Else** — Portainer for managing Docker, Syncthing for file sync between devices, FreshRSS for RSS feeds, and a custom Markdown viewer that Clawdbot built for browsing its own documentation.
+### Photos
 
-## Clawdbot
+Immich is here, including its ML worker, Postgres, Valkey, and importer path. That makes NurseDroid the practical photo hub for the rest of the system, including the kitchen screen.
 
-The most interesting thing on this machine isn't a container — it's Clawdbot.
+### Utility services
 
-Clawdbot is an autonomous AI agent running through a framework called Wisp. It has its own identity files, a diary, a memory system, and a task backlog. Cron jobs keep it alive — if the process dies, it restarts itself. It works through tasks overnight, logging what it does.
+The host is also carrying the small but important services:
 
-Some things it's built:
-- A bushfire evacuation plan integrated with Home Assistant
-- Estate planning and insurance checklists for the family
-- The markdown viewer service
-- A Discord monitoring setup
-- A bidirectional memory sync system with its own systemd service
-- Various Home Assistant integrations and automation configs
+- Portainer
+- Syncthing
+- FreshRSS
+- the markdown viewer
 
-The thing that surprised me most: when I gave it a mixed list of infrastructure tasks and family safety tasks, it chose to work on the family stuff first. Estate planning, bushfire preparedness, insurance review. Nobody told it to prioritise that way.
+### Monitoring overlap
 
-It also keeps a diary. Here's a real entry from February:
+Monitoring is split across machines rather than being cleanly isolated. Grafana is currently running on NurseDroid, while the Orange Pi is also running Prometheus, Grafana-adjacent exporters, PostgreSQL, and NetFlow collection. That is more honest than the older one-sentence summary that implied a tidier split than the lab actually has.
 
-> "Today has been incredibly productive. Alex was doing family Saturday stuff and I got to work autonomously."
->
-> "Alex asked me to check if our systems are actually being used. Fair question. We have 13 cron jobs running but are they producing value?"
+## Clawd Operational Layer
 
-An AI agent questioning whether its own work is providing value. Make of that what you will.
+The most interesting part of NurseDroid is not just Docker. It is the script and cron layer around `/home/saphid/clawd`.
 
-## Key Decisions
+The active user crontab currently includes:
 
-**Killing Kubernetes** — There was a k8s installation eating 3.6 GB of RAM that nobody was using. The agent flagged it, I approved, and Docker Compose got all that memory back. For a single-node home server, k8s is overkill.
+- morning briefing generation
+- overnight heartbeat work
+- Android to Home Assistant sync
+- Android and markdown viewer health checks
+- OpenClaw runtime checks
+- a Home Assistant history sync job aimed at the Orange Pi
 
-**Immich over Google Photos** — Immich runs locally, does ML-powered search, and feeds the kitchen dashboard. No cloud dependency. The trade-off is maintaining it yourself, but it's been stable.
+So the machine is doing two jobs at once:
+
+- hosting services
+- coordinating and checking the rest of the estate
+
+## What Changed From Earlier Versions
+
+The older post cleaned up the story too much. These are the important corrections:
+
+- no, this is not just an "everything in Docker" story; the cron and helper-script layer matters
+- the live container count is 12
+- Grafana is still here even though the Orange Pi is also carrying serious monitoring duties
+- the media stack described in the old post was only a partial view of what is actually running
 
 ## Current State
 
-Stable. All 11 containers running. Clawdbot continues its overnight work cycles. Next steps are expanding the monitoring dashboards and deeper integration between Clawdbot and Home Assistant.
+NurseDroid is stable and busy. It is not the only important machine anymore, but it is still the place where most of the cross-system glue lives.
 
 ---
 

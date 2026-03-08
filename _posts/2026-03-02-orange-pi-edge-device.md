@@ -6,43 +6,68 @@ date: 2026-03-02
 
 # Orange Pi RV2 — The Edge Device
 
-I won this in a Home Assistant AUNZ competition. It's a RISC-V single-board computer — 8 cores, 8 GB RAM, dual gigabit ethernet, and a 2 TOPS AI accelerator. It started as an experiment and ended up becoming a real monitoring node.
+The Orange Pi RV2 stopped being just a competition curiosity. It is now a real monitoring node in the homelab.
 
-## The Hardware
+## Verified Current State
 
-The Orange Pi RV2 runs a SpacemiT K1 processor with 8 RISC-V cores at 1.6 GHz. It's a different architecture from the ARM Pi 5 in the kitchen — RISC-V is open-source, less mature, but getting better fast. See [my comparison of the two]({{ "/pi5-vs-orangepi-rv2/" | relative_url }}).
+At audit time the board was:
 
-It runs Ubuntu 24.04 LTS with a 6.6 kernel, booting from the onboard 58 GB eMMC rather than an SD card.
+- reachable live as `orangepi`
+- running Ubuntu 24.04.4 LTS on `riscv64`
+- booting from onboard eMMC
+- using about 1 GB RAM out of 7.7 GB available
 
-## The eMMC Migration
+These services were actively running:
 
-When I first set it up, it booted from a 512 GB SD card. Codex migrated the whole system to the onboard eMMC in a single session. Rather than doing a manual `dd` (risky on a RISC-V board with a non-standard boot chain), it found the vendor's built-in `nand-sata-install` tool and used that. Copied 321,250 files, updated the boot config, and verified everything came back up. The SD card isn't needed anymore.
+- Prometheus
+- Grafana
+- PostgreSQL 16
+- node exporter
+- blackbox exporter
+- SNMP exporter
+- `nfcapd` for NetFlow capture
+- `ai-mode-api`
+- Fail2Ban
+- `snmpd`
 
-The boot chain on this board goes: SPI flash (holds U-Boot) → eMMC (kernel + rootfs). Clean separation between bootloader and OS.
+The expected local ports also responded:
 
-## What's Running
+- `3000` for Grafana
+- `9090` for Prometheus
+- `9100` for node exporter
+- `9115` for blackbox exporter
+- `9116` for SNMP exporter
+- `5432` for PostgreSQL
 
-This thing is doing real work now:
+## What It Is Good At
 
-**Monitoring Stack** — Prometheus, Grafana (both running natively on RISC-V), node exporter, blackbox exporter, SNMP exporter. This handles the monitoring for the whole homelab, keeping that workload off NurseDroid.
+This machine makes sense as a monitoring and observability node because it has:
 
-**Database** — PostgreSQL 16. Stores Grafana dashboards and any structured data the monitoring stack needs.
+- dual ethernet
+- onboard eMMC
+- enough RAM to stay comfortable under the current service mix
+- a workload that is mostly long-running services rather than interactive UI
 
-**Network Monitoring** — nfdump/nfcapd for NetFlow capture. With dual gigabit ethernet, this board is naturally suited to watching network traffic.
+The live load average was a bit above 3 across 8 cores, which is entirely reasonable for this role.
 
-**AI Services** — There's a custom "AI Mode API" service running — an edge AI endpoint running directly on the RISC-V hardware.
+## How It Got Here
 
-**Security** — Fail2Ban for intrusion prevention, unattended upgrades for automatic patching.
+The archived Codex sessions and local research notes still matter:
 
-## Resource Usage
+- the board started as a Home Assistant competition win
+- it was first discussed and accessed on an older address
+- the system was migrated from SD to eMMC
+- the early plan was broader network capture and analysis
 
-With all that running, it uses about 1 GB of RAM out of 8 GB available. Load average sits around 3.2 across 8 cores, which is comfortably moderate. 17 GB of the 57 GB eMMC is in use.
+The important thing now is that the board actually made the transition from "interesting hardware plan" to "operational monitoring node."
 
-For a board that costs a fraction of a "real" server, that's solid.
+## What Changed From The Older Post
+
+The older post was directionally right but still half future-tense. The current version is stronger because it is based on live service checks, not just research notes about what the board should be able to do.
 
 ## Current State
 
-Online and stable. Doing the job it was given. The RISC-V ecosystem has a few rough edges — some packages don't have riscv64 builds and need compiling — but for the monitoring workload, everything I need works.
+The Orange Pi RV2 is one of the clearest wins in the setup. It is doing exactly the kind of boring, continuous work that justifies giving a separate machine its own role.
 
 ---
 

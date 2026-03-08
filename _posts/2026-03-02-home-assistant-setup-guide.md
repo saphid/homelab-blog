@@ -6,156 +6,139 @@ date: 2026-03-02
 
 # Setting Up Home Assistant Integrations
 
-This guide covers the Home Assistant integrations built by AI agents — particularly the camera-to-dashboard bridge and the bushfire evacuation automation — and how to set them up yourself.
+This guide covers the Home Assistant integrations I could actually verify during the March 8, 2026 audit. The two solid paths are:
+
+- the Android Termux phone sensor bridge
+- the kitchen screen camera and summary integration
 
 ## Prerequisites
 
-- Home Assistant running (HAOS, Docker, or supervised install)
-- Camera integrations configured in HA
-- Network access from other devices to HA's API
+- Home Assistant running on your LAN
+- A long-lived access token for the API
+- One client machine that can reach HA and the other device you are integrating
+- For the Android path: a Termux phone node with HTTP endpoints available locally
 
 ---
 
 ## The Agent Approach
 
-The AI agents worked on Home Assistant from two directions: Codex built the camera integration for the kitchen dashboard, and Clawdbot built the family safety automations.
+The useful thing the agents did here was not magic. They stitched together a few boring but important pieces: token handling, periodic sync, and health checks.
 
-### Camera API Integration (Codex)
+### 1. Android sensor bridge
 
-The challenge: get live camera feeds from Home Assistant into a browser-based dashboard on a different device.
+The current live flow is:
 
-What the agent did:
-1. **Discovered the HA API** — found that HA exposes camera streams via its REST API with long-lived access tokens
-2. **Built a proxy** — since the dashboard browser can't authenticate directly to HA (CORS + auth), the agent built a Python server-side proxy that authenticates to HA and re-serves the MJPEG stream
-3. **Added frame validation** — MJPEG streams from some cameras deliver corrupted frames; the proxy validates JPEG headers before forwarding
-4. **Handled reconnection** — cameras occasionally drop; the proxy reconnects automatically
+1. `android-ha-api.py` runs on the Pixel in Termux
+2. NurseDroid polls that API
+3. `android-ha-state-sync.py` pushes the values into Home Assistant state entities
+4. `android-ha-stack-health-check.sh` validates the whole chain
 
-### Family Safety Automations (Clawdbot)
+The sync is scheduled from cron on NurseDroid, not from a device-local cron on the phone.
 
-Clawdbot autonomously prioritized these over tech projects:
+### 2. Kitchen screen bridge
 
-1. **Bushfire evacuation plan** — A structured checklist with HA triggers based on temperature and wind speed sensors
-2. **Notification flow** — Alerts pushed to phones and the kitchen dashboard
-3. **Planned automations** — Morning routine scenes, weather monitoring alerts
+The kitchen screen does not talk to HA directly from the browser. The current deployment exposes API routes on the Pi that fetch calendar, home summary, and camera data server-side and then hand a same-origin response to the frontend.
 
-### What Required Human Input
+That matters because it avoids browser auth headaches and keeps tokens off the client.
 
-- Providing a long-lived access token for the HA API
-- Camera entity IDs (which cameras to expose)
-- Automation trigger thresholds (what temperature/wind speed is dangerous)
-- Family-specific evacuation procedures
+### What still needed human input
+
+- generating the long-lived token
+- choosing which entities should be exposed downstream
+- deciding which sensor values are worth keeping as permanent HA entities
 
 ---
 
 ## The Manual Approach
 
-### 1. Exposing Camera Feeds to Other Devices
+### 1. Generate a long-lived token
 
-Home Assistant cameras are accessible via the API:
+In Home Assistant:
 
-```
-GET /api/camera_proxy_stream/<entity_id>
-Authorization: Bearer <long-lived-token>
-```
+- open your profile
+- create a long-lived access token
+- store it somewhere local and boring, not in source control
 
-To get a long-lived token: HA → Profile → Long-Lived Access Tokens → Create Token.
+### 2. Expose Android device state
 
-**The CORS problem**: If you try to load this directly in an `<img>` tag on another device, the browser blocks it (different origin). You need a proxy.
+On the phone, run an API service that can return small JSON payloads for:
 
-### 2. Building a Camera Proxy
+- battery
+- Wi-Fi
+- system metadata
+- sensors
+- volume
+- camera summary
 
-A minimal Python proxy (Flask example):
+The audited setup uses a local HTTP service and leaves orchestration to NurseDroid.
+
+### 3. Poll and push into Home Assistant
+
+The actual sync shape is:
 
 ```python
 import requests
-from flask import Flask, Response
 
-app = Flask(__name__)
+ANDROID_API = "http://phone-node:8080"
+HA_BASE = "http://homeassistant.local:8123"
 
-HA_URL = "http://homeassistant.local"
-HA_TOKEN = "your-long-lived-token"
+def fetch(path):
+    return requests.get(f"{ANDROID_API}/{path}", timeout=15).json()
 
-@app.route('/camera/<entity_id>')
-def proxy(entity_id):
-    url = f"{HA_URL}/api/camera_proxy_stream/{entity_id}"
-    headers = {"Authorization": f"Bearer {HA_TOKEN}"}
-
-    def generate():
-        with requests.get(url, headers=headers, stream=True) as r:
-            for chunk in r.iter_content(chunk_size=1024):
-                yield chunk
-
-    return Response(generate(), content_type='multipart/x-mixed-replace; boundary=frame')
+def push_state(headers, entity_id, state, attributes=None):
+    payload = {"state": str(state), "attributes": attributes or {}}
+    requests.post(
+        f"{HA_BASE}/api/states/{entity_id}",
+        headers=headers,
+        json=payload,
+        timeout=12,
+    ).raise_for_status()
 ```
 
-Add frame validation by checking for JPEG markers (`FFD8` start, `FFD9` end) in each chunk before yielding.
+The key idea is simple: normalize the Android payload on the host that does the polling, then push stable helper entities into HA.
 
-### 3. Voice Assistant (Local, No Cloud)
+### 4. Add health checks
 
-Home Assistant supports fully local voice processing:
+This part matters more than the initial sync script. The audited stack checks:
 
-- **Whisper** — Speech-to-text (install via HA Add-ons)
-- **Piper** — Text-to-speech (install via HA Add-ons)
+- the phone API endpoints
+- the freshness of the sync log
+- the presence of representative HA entities like `sensor.android_battery`
 
-Setup:
-1. Install both add-ons from the HA Add-on Store
-2. Configure a voice assistant pipeline: Settings → Voice assistants → Add assistant
-3. Select Whisper for STT and Piper for TTS
-4. Assign to an ESPHome voice satellite or use HA's mobile app
+That stops the integration from silently decaying.
 
-No audio leaves your network.
+### 5. Put HA behind a server-side app boundary for dashboards
 
-### 4. Weather-Based Safety Automations
+If another UI needs camera or summary data, prefer a small server-side bridge rather than putting HA tokens in the browser.
 
-For bushfire-prone areas, temperature and wind monitoring can trigger alerts:
+The current kitchen screen stack exposes API routes such as:
 
-```yaml
-automation:
-  - alias: "High Fire Danger Alert"
-    trigger:
-      - platform: numeric_state
-        entity_id: sensor.outdoor_temperature
-        above: 38
-    condition:
-      - condition: numeric_state
-        entity_id: sensor.wind_speed
-        above: 40
-    action:
-      - service: notify.mobile_app
-        data:
-          title: "Fire Danger Warning"
-          message: "Temperature and wind conditions are elevated. Review evacuation checklist."
-      - service: persistent_notification.create
-        data:
-          title: "Fire Danger Warning"
-          message: "High temperature and wind detected. Check conditions."
+- `/api/home_summary`
+- `/api/calendar`
+- `/api/cameras`
+- `/api/camera_proxy/:entity`
+- `/api/camera_proxy_stream/:entity`
+
+## Validation Checklist
+
+After setup, verify:
+
+1. The phone-side API responds locally.
+2. The sync host can poll that API.
+3. Home Assistant receives updated state entities.
+4. A dependent UI can consume the resulting summary or camera routes.
+
+If any of those fail, fix the broken edge instead of adding another layer of glue.
+
+## Example Cron Shape
+
+The audited NurseDroid setup uses a schedule like this:
+
+```cron
+*/5 * * * * /usr/bin/python3 /home/saphid/clawd/scripts/android-ha-state-sync.py >> /home/saphid/clawd/logs/android-ha-state-sync.log 2>&1
+*/15 * * * * /home/saphid/clawd/scripts/android-ha-stack-health-check.sh >> /home/saphid/clawd/logs/android-ha-stack-health-check.log 2>&1
 ```
 
-### 5. Morning Routine Scenes
+## What I Removed From The Older Version
 
-Coordinate lights, blinds, and media for the household wake-up:
-
-```yaml
-scene:
-  - name: "Morning Routine"
-    entities:
-      light.kitchen:
-        state: "on"
-        brightness: 200
-      cover.living_room_blinds:
-        state: "open"
-      media_player.kitchen_speaker:
-        state: "playing"
-```
-
-Trigger via time-based automation or voice command.
-
-### 6. Common Issues
-
-| Problem | Cause | Fix |
-|---------|-------|-----|
-| Camera feed blank in dashboard | CORS blocking | Use a server-side proxy |
-| Camera stream drops | Network hiccup | Add reconnection logic in proxy |
-| Token expired | Long-lived tokens don't expire, but can be revoked | Check token is still valid in HA profile |
-| Voice assistant not responding | Whisper/Piper not configured | Check pipeline settings |
-| Automation not firing | Trigger conditions too narrow | Test with `Developer Tools → States` |
+The earlier draft gave more space to partially-documented family-safety automations than to the integrations I could actually verify. This version keeps the guide focused on the paths that are clearly live.

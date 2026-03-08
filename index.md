@@ -5,12 +5,8 @@ title: Home
 
 # Infrastructure, Agents, and Build Notes
 
-This blog tracks a homelab that is part household infrastructure, part software workshop. The machines run real services for the house, and a mix of coding agents have been used to set them up, maintain them, and extend them over time.
+This site is a cleaned-up record of a real homelab that has been built and maintained with help from coding agents. The important thing is not the agent hype. The important thing is what is actually running, what changed over time, and which parts of the story are current state versus archived build history.
 
-The useful parts are the systems themselves: Nursedroid as the home server, the Kitchen Screen as the household control surface, the Orange Pi as the edge box, Home Assistant tying the house together, and the build notes that make the setup reproducible.
+I re-audited the systems and the Codex session history on March 8, 2026. The pages here now aim to be explicit about what was verified live, what comes from archived session logs, and where earlier blog drafts had drifted away from reality.
 
-Most posts are either:
-
-- infrastructure logs for a machine or service
-- setup guides that explain how to recreate part of the stack
-- notes on how the agents actually behaved when given real jobs
+The main systems covered here are NurseDroid, the kitchen screen, the Orange Pi monitoring node, the Termux Pixel phone, and Home Assistant.
