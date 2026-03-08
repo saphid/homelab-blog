@@ -809,3 +809,56 @@ main.site-main {
     width: min(100% - 20px, 1120px);
   }
 }
+
+/* ── DESIGN SHOWCASE ── */
+.design-showcase {
+  margin: 3rem 0;
+}
+
+.showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.showcase-card {
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.showcase-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--card-accent, var(--accent));
+  box-shadow: 0 8px 24px var(--shadow);
+}
+
+.showcase-num {
+  font-family: "SF Mono", "Cascadia Code", "Fira Code", monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--card-accent, var(--accent));
+  letter-spacing: 0.1em;
+  margin-bottom: 0.75rem;
+}
+
+.showcase-card h3 {
+  font-size: 1.05rem;
+  color: var(--heading);
+  margin-bottom: 0.4rem;
+  line-height: 1.2;
+}
+
+.showcase-card p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  flex: 1;
+}

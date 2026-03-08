@@ -1,0 +1,376 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SAPHID LAB — Experimental Playground</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap');
+
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  :root{
+    --bg:#f0edff;
+    --surface:#fff;
+    --purple:#6c3ce0;
+    --purple-soft:rgba(108,60,224,.08);
+    --pink:#ff5ca1;
+    --pink-soft:rgba(255,92,161,.08);
+    --lime:#b8f53a;
+    --lime-dark:#5a7a10;
+    --orange:#ff8a3d;
+    --navy:#1a1640;
+    --text:#2d2950;
+    --text-soft:#706b8a;
+    --radius:20px;
+  }
+
+  body{
+    font-family:'Space Mono',monospace;
+    background:var(--bg);color:var(--text);line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:var(--purple);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* ── BLOBS ── */
+  .blobs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+  .blob{
+    position:absolute;border-radius:50%;filter:blur(90px);opacity:.3;
+    animation:drift 22s ease-in-out infinite alternate;
+  }
+  .b1{width:420px;height:420px;background:var(--purple);top:-120px;left:-60px;animation-delay:-4s}
+  .b2{width:380px;height:380px;background:var(--pink);bottom:-100px;right:8%;animation-delay:-8s}
+  .b3{width:320px;height:320px;background:var(--lime);top:35%;right:-100px;animation-delay:-14s}
+  .b4{width:250px;height:250px;background:var(--orange);top:60%;left:10%;animation-delay:-18s}
+  @keyframes drift{
+    0%{transform:translate(0,0) scale(1)}
+    25%{transform:translate(30px,-25px) scale(1.06)}
+    50%{transform:translate(-20px,35px) scale(.94)}
+    75%{transform:translate(25px,15px) scale(1.03)}
+    100%{transform:translate(-10px,-20px) scale(.98)}
+  }
+
+  .page{position:relative;z-index:1}
+
+  /* ── NAV ── */
+  .lab-nav{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:1.25rem 2rem;
+  }
+  .lab-logo{
+    font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;
+    color:var(--purple);text-decoration:none;
+    background:var(--surface);padding:.4rem 1rem;
+    border-radius:999px;border:2px solid var(--purple);
+    transition:all .2s;
+  }
+  .lab-logo:hover{background:var(--purple);color:var(--surface);text-decoration:none}
+  .lab-links{display:flex;gap:.5rem;flex-wrap:wrap}
+  .lab-links a{
+    font-size:.68rem;font-weight:700;color:var(--text);
+    padding:.35rem .8rem;border-radius:999px;
+    background:var(--surface);border:1.5px solid transparent;
+    transition:all .2s;text-decoration:none;
+  }
+  .lab-links a:hover{border-color:var(--purple);color:var(--purple);transform:translateY(-1px)}
+
+  /* ── HERO ── */
+  .lab-hero{text-align:center;padding:3.5rem 2rem 2rem}
+  .lab-badge{
+    display:inline-block;font-family:'Syne',sans-serif;
+    font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em;
+    background:var(--lime);color:var(--navy);padding:.35em 1.2em;
+    border-radius:999px;margin-bottom:1.5rem;
+  }
+  .lab-hero h1{
+    font-family:'Syne',sans-serif;font-size:clamp(2.5rem,7vw,5rem);
+    font-weight:800;line-height:.95;color:var(--navy);margin-bottom:1rem;
+  }
+  .lab-hero h1 .gradient{
+    background:linear-gradient(135deg,var(--purple),var(--pink),var(--orange));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  }
+  .lab-hero p{
+    font-size:.85rem;color:var(--text-soft);max-width:480px;margin:0 auto;
+  }
+
+  /* ── EXPERIMENT HYPOTHESIS CARDS ── */
+  .experiments{
+    max-width:1100px;margin:2.5rem auto;padding:0 2rem;
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;
+  }
+  .exp{
+    background:var(--surface);border-radius:var(--radius);padding:1.75rem;
+    display:flex;flex-direction:column;border:2px solid transparent;
+    transition:transform .25s,box-shadow .25s,border-color .2s;
+    text-decoration:none;color:inherit;
+  }
+  .exp:hover{
+    transform:translateY(-4px) rotate(-.5deg);
+    box-shadow:0 14px 44px rgba(108,60,224,.1);
+    border-color:var(--purple);
+  }
+  .exp:nth-child(3n+2):hover{border-color:var(--pink)}
+  .exp:nth-child(3n):hover{border-color:var(--lime)}
+  .exp-num{
+    font-family:'Syne',sans-serif;font-size:.58rem;font-weight:700;
+    text-transform:uppercase;letter-spacing:.22em;color:var(--text-soft);margin-bottom:.6rem;
+  }
+  .exp h3{
+    font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;
+    color:var(--navy);margin-bottom:.4rem;line-height:1.25;
+  }
+  .exp .hypothesis{
+    font-style:italic;font-size:.75rem;color:var(--purple);
+    margin-bottom:.6rem;padding:.4rem .7rem;
+    background:var(--purple-soft);border-radius:8px;
+  }
+  .exp p{font-size:.76rem;color:var(--text-soft);flex:1;margin-bottom:.8rem}
+  .exp-tags{display:flex;gap:.3rem;flex-wrap:wrap}
+  .tag{
+    font-size:.58rem;font-weight:700;padding:.18em .65em;
+    border-radius:999px;text-transform:uppercase;letter-spacing:.08em;
+  }
+  .tag.p{background:var(--purple-soft);color:var(--purple)}
+  .tag.k{background:var(--pink-soft);color:var(--pink)}
+  .tag.l{background:rgba(184,245,58,.18);color:var(--lime-dark)}
+  .tag.o{background:rgba(255,138,61,.1);color:var(--orange)}
+
+  /* ── STATS BANNER ── */
+  .stats-banner{max-width:1100px;margin:2rem auto;padding:0 2rem}
+  .stats-inner{
+    background:var(--navy);border-radius:24px;padding:2.5rem;
+    display:flex;justify-content:space-around;flex-wrap:wrap;gap:1.5rem;
+  }
+  .lab-stat{text-align:center}
+  .stat-v{
+    font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;display:block;
+  }
+  .lab-stat:nth-child(1) .stat-v{color:var(--lime)}
+  .lab-stat:nth-child(2) .stat-v{color:var(--pink)}
+  .lab-stat:nth-child(3) .stat-v{color:var(--orange)}
+  .lab-stat:nth-child(4) .stat-v{color:var(--purple)}
+  .stat-l{
+    font-size:.6rem;text-transform:uppercase;letter-spacing:.14em;
+    color:rgba(255,255,255,.45);margin-top:.2rem;display:block;
+  }
+
+  /* ── TICKER ── */
+  .ticker{
+    overflow:hidden;padding:1.1rem 0;margin:2rem 0;
+    border-top:2px solid var(--navy);border-bottom:2px solid var(--navy);
+  }
+  .ticker-track{
+    display:flex;gap:3rem;width:max-content;
+    animation:scroll-x 35s linear infinite;
+  }
+  .ticker-item{
+    font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;
+    color:var(--navy);white-space:nowrap;
+    display:flex;align-items:center;gap:.5rem;
+  }
+  .td{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .td.p{background:var(--purple)}.td.k{background:var(--pink)}
+  .td.l{background:var(--lime)}.td.o{background:var(--orange)}
+  @keyframes scroll-x{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+  /* ── FINDINGS SECTION ── */
+  .findings{max-width:720px;margin:3rem auto;padding:0 2rem}
+  .findings-head{
+    font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;
+    color:var(--navy);margin-bottom:.3rem;
+  }
+  .findings-sub{font-size:.8rem;color:var(--text-soft);margin-bottom:1.5rem}
+
+  .finding-card{
+    background:var(--surface);border-radius:16px;padding:1.25rem 1.5rem;
+    margin-bottom:.65rem;display:flex;align-items:center;gap:1rem;
+    text-decoration:none;color:inherit;
+    border-left:4px solid transparent;
+    transition:transform .15s,border-color .2s;
+  }
+  .finding-card:hover{transform:translateX(6px)}
+  .finding-card:nth-child(odd){border-left-color:var(--purple)}
+  .finding-card:nth-child(even){border-left-color:var(--pink)}
+  .finding-card:nth-child(3n){border-left-color:var(--lime)}
+  .fc-idx{
+    font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;
+    color:var(--purple);opacity:.25;width:36px;text-align:center;flex-shrink:0;
+  }
+  .finding-card h4{
+    font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;
+    color:var(--navy);margin-bottom:.1rem;
+  }
+  .finding-card .fc-date{font-size:.65rem;color:var(--text-soft)}
+
+  /* ── CONCLUSION BLOCK ── */
+  .conclusion{
+    max-width:700px;margin:3rem auto;padding:0 2rem;text-align:center;
+  }
+  .conclusion-inner{
+    background:var(--surface);border-radius:24px;padding:2.5rem;
+    border:2px solid var(--purple-soft);
+  }
+  .conclusion h2{
+    font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;
+    color:var(--navy);margin-bottom:.6rem;
+  }
+  .conclusion p{font-size:.82rem;color:var(--text-soft);max-width:500px;margin:0 auto .5rem}
+
+  /* ── FOOTER ── */
+  .lab-footer{
+    text-align:center;padding:2.5rem 2rem;
+    font-size:.72rem;color:var(--text-soft);
+  }
+  .lab-footer a{color:var(--purple);font-weight:700}
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:768px){
+    .lab-hero{padding:2rem 1rem 1.5rem}
+    .experiments{padding:0 1rem;gap:.8rem}
+    .stats-inner{padding:1.5rem}
+    .lab-nav{flex-direction:column;gap:.6rem;padding:1rem}
+    .findings{padding:0 1rem}
+    .conclusion{padding:0 1rem}
+  }
+</style>
+</head>
+<body>
+
+<div class="blobs">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+  <div class="blob b4"></div>
+</div>
+
+<div class="page">
+
+<nav class="lab-nav">
+  <a href="{{ '/index.html' | relative_url }}" class="lab-logo">SAPHID LAB</a>
+  <div class="lab-links">
+    <a href="{{ '/index.html' | relative_url }}">Home</a>
+    <a href="{{ '/1/index.html' | relative_url }}">Editorial</a>
+    <a href="{{ '/2/index.html' | relative_url }}">Control Panel</a>
+    <a href="{{ '/3/index.html' | relative_url }}">Organic</a>
+    <a href="{{ '/4/index.html' | relative_url }}">Brutalist</a>
+    <a href="{{ '/links.html' | relative_url }}">Links</a>
+  </div>
+</nav>
+
+<section class="lab-hero">
+  <div class="lab-badge">Experimental Zone</div>
+  <h1>The <span class="gradient">Homelab</span> Playground</h1>
+  <p>Where infrastructure meets curiosity. Every system is an experiment, every agent is a hypothesis, every container is a test tube.</p>
+</section>
+
+<section class="experiments">
+  <a href="{{ '/nursedroid-home-server/' | relative_url }}" class="exp">
+    <div class="exp-num">Experiment 001</div>
+    <h3>NurseDroid: The Core Server</h3>
+    <div class="hypothesis">H: A single mini-PC can replace an entire server rack for a household.</div>
+    <p>Intel N100, 16GB RAM, 11 containers. Docker Compose as the orchestration layer. The backbone hypothesis.</p>
+    <div class="exp-tags"><span class="tag p">Docker</span><span class="tag k">Server</span><span class="tag l">Core</span></div>
+  </a>
+  <a href="{{ '/kitchen-screen-dashboard/' | relative_url }}" class="exp">
+    <div class="exp-num">Experiment 002</div>
+    <h3>Kitchen Screen: Family Interface</h3>
+    <div class="hypothesis">H: A wall display can serve as the household's single pane of glass.</div>
+    <p>Agent-updated dashboards tested with non-technical users. The UX hypothesis: can infrastructure be invisible?</p>
+    <div class="exp-tags"><span class="tag l">Dashboard</span><span class="tag o">UX</span></div>
+  </a>
+  <a href="{{ '/orange-pi-edge-device/' | relative_url }}" class="exp">
+    <div class="exp-num">Experiment 003</div>
+    <h3>Orange Pi RV2: RISC-V at the Edge</h3>
+    <div class="hypothesis">H: RISC-V can handle lightweight homelab tasks in production.</div>
+    <p>Bleeding-edge architecture for edge compute. Testing whether ARM alternatives have arrived for real workloads.</p>
+    <div class="exp-tags"><span class="tag p">RISC-V</span><span class="tag l">Edge</span></div>
+  </a>
+  <a href="{{ '/termux-clawd-pixel-phone/' | relative_url }}" class="exp">
+    <div class="exp-num">Experiment 004</div>
+    <h3>Termux: Pocket Agent Terminal</h3>
+    <div class="hypothesis">H: A retired phone can be a legitimate remote operations terminal.</div>
+    <p>Old Pixel running Claude via Termux. Mobile-first infrastructure management from anywhere.</p>
+    <div class="exp-tags"><span class="tag k">Mobile</span><span class="tag o">Agent</span></div>
+  </a>
+  <a href="{{ '/home-assistant-smart-home/' | relative_url }}" class="exp">
+    <div class="exp-num">Experiment 005</div>
+    <h3>Home Assistant: The Nervous System</h3>
+    <div class="hypothesis">H: HA can scale to 264+ entities without becoming unmanageable.</div>
+    <p>Dozens of automations, Zigbee mesh, MQTT. Testing the complexity ceiling of a home automation platform.</p>
+    <div class="exp-tags"><span class="tag l">IoT</span><span class="tag p">Automation</span></div>
+  </a>
+  <a href="{{ '/pi5-vs-orangepi-rv2/' | relative_url }}" class="exp">
+    <div class="exp-num">Experiment 006</div>
+    <h3>ARM vs RISC-V Shootout</h3>
+    <div class="hypothesis">H: Architecture matters less than ecosystem for homelab edge tasks.</div>
+    <p>Pi 5 versus Orange Pi RV2. Benchmarks, thermals, and real-world vibes after two months.</p>
+    <div class="exp-tags"><span class="tag o">Hardware</span><span class="tag k">Benchmark</span></div>
+  </a>
+</section>
+
+<div class="stats-banner">
+  <div class="stats-inner">
+    <div class="lab-stat"><span class="stat-v">{{ site.posts | size }}</span><span class="stat-l">Lab Notes</span></div>
+    <div class="lab-stat"><span class="stat-v">264</span><span class="stat-l">Sensors</span></div>
+    <div class="lab-stat"><span class="stat-v">5</span><span class="stat-l">Systems</span></div>
+    <div class="lab-stat"><span class="stat-v">99.7%</span><span class="stat-l">Uptime</span></div>
+  </div>
+</div>
+
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item"><span class="td p"></span>NurseDroid Online</span>
+    <span class="ticker-item"><span class="td k"></span>Kitchen Screen Rendering</span>
+    <span class="ticker-item"><span class="td l"></span>264 HA Entities Synced</span>
+    <span class="ticker-item"><span class="td o"></span>Clawdbot Watching</span>
+    <span class="ticker-item"><span class="td p"></span>11 Containers Running</span>
+    <span class="ticker-item"><span class="td k"></span>Orange Pi Idle</span>
+    <span class="ticker-item"><span class="td l"></span>Termux Connected</span>
+    <span class="ticker-item"><span class="td o"></span>Backup Complete</span>
+    <span class="ticker-item"><span class="td p"></span>NurseDroid Online</span>
+    <span class="ticker-item"><span class="td k"></span>Kitchen Screen Rendering</span>
+    <span class="ticker-item"><span class="td l"></span>264 HA Entities Synced</span>
+    <span class="ticker-item"><span class="td o"></span>Clawdbot Watching</span>
+    <span class="ticker-item"><span class="td p"></span>11 Containers Running</span>
+    <span class="ticker-item"><span class="td k"></span>Orange Pi Idle</span>
+    <span class="ticker-item"><span class="td l"></span>Termux Connected</span>
+    <span class="ticker-item"><span class="td o"></span>Backup Complete</span>
+  </div>
+</div>
+
+<section class="findings">
+  <h2 class="findings-head">Lab Notebook</h2>
+  <p class="findings-sub">Full chronological index of every experiment and finding.</p>
+  {% for post in site.posts %}
+  <a href="{{ post.url | relative_url }}" class="finding-card">
+    <span class="fc-idx">{{ forloop.index }}</span>
+    <div>
+      <h4>{{ post.title }}</h4>
+      <span class="fc-date">{{ post.date | date: "%B %-d, %Y" }}</span>
+    </div>
+  </a>
+  {% endfor %}
+</section>
+
+<div class="conclusion">
+  <div class="conclusion-inner">
+    <h2>Current Status: Experiment Ongoing</h2>
+    <p>The homelab is self-managing. Agents propose changes. Infrastructure grows. The household lives inside the system without thinking about it.</p>
+    <p>That's either a successful experiment or the beginning of a very specific kind of problem. We'll find out.</p>
+  </div>
+</div>
+
+<footer class="lab-footer">
+  <p>SAPHID LAB · Where infrastructure gets weird · <a href="{{ '/index.html' | relative_url }}">← Back to main site</a></p>
+</footer>
+
+</div>
+
+</body>
+</html>

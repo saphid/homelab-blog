@@ -1,0 +1,416 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saphid — Warm Organic</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
+
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  :root{
+    --sand:#f5efe6;
+    --warm:#ede4d4;
+    --linen:#faf6ef;
+    --cream:#fdfaf5;
+    --terra:#c68b59;
+    --terra-soft:rgba(198,139,89,.08);
+    --bark:#5c3d2e;
+    --bark-soft:rgba(92,61,46,.06);
+    --moss:#6b8f71;
+    --moss-soft:rgba(107,143,113,.08);
+    --clay:#b85c38;
+    --clay-soft:rgba(184,92,56,.06);
+    --text:#3a2e25;
+    --text-soft:#7d6b5d;
+    --radius-sm:12px;
+    --radius:20px;
+    --radius-lg:28px;
+  }
+
+  body{
+    font-family:'DM Sans',system-ui,-apple-system,sans-serif;
+    background:var(--sand);color:var(--text);line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* paper texture */
+  body::before{
+    content:'';position:fixed;inset:0;pointer-events:none;opacity:.03;z-index:9999;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:200px 200px;
+  }
+
+  a{color:var(--terra);text-decoration:none}
+  a:hover{color:var(--clay)}
+
+  .page{max-width:1100px;margin:0 auto;padding:0 2rem}
+
+  /* ── NAV ── */
+  .o-nav{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:1.5rem 0;
+  }
+  .o-brand{
+    font-family:'Libre Baskerville',Georgia,serif;
+    font-size:1.3rem;font-weight:700;color:var(--bark);text-decoration:none;
+  }
+  .o-links{display:flex;gap:.6rem;flex-wrap:wrap}
+  .o-links a{
+    font-size:.78rem;font-weight:600;color:var(--text-soft);
+    padding:.4rem .9rem;border-radius:999px;
+    background:var(--cream);border:1.5px solid var(--warm);
+    transition:all .2s;
+  }
+  .o-links a:hover{
+    background:var(--terra-soft);border-color:var(--terra);color:var(--terra);
+    transform:translateY(-1px);
+  }
+
+  /* ── HERO ── */
+  .o-hero{
+    background:var(--cream);border-radius:var(--radius-lg);
+    padding:4rem 3.5rem;margin:1rem 0 2.5rem;
+    position:relative;overflow:hidden;
+  }
+  .o-hero::before{
+    content:'';position:absolute;top:-80px;right:-60px;width:280px;height:280px;
+    border-radius:50%;background:var(--terra);opacity:.08;
+  }
+  .o-hero::after{
+    content:'';position:absolute;bottom:-50px;left:25%;width:200px;height:200px;
+    border-radius:50%;background:var(--moss);opacity:.07;
+  }
+  .o-hero-content{position:relative;z-index:1}
+  .o-eyebrow{
+    font-size:.72rem;font-weight:700;text-transform:uppercase;
+    letter-spacing:.18em;color:var(--terra);margin-bottom:1rem;
+    display:flex;align-items:center;gap:.6rem;
+  }
+  .o-eyebrow::before{content:'';width:24px;height:2px;background:var(--terra);border-radius:999px}
+  .o-hero h1{
+    font-family:'Libre Baskerville',Georgia,serif;
+    font-size:clamp(2rem,5vw,3.2rem);font-weight:700;
+    line-height:1.15;color:var(--bark);max-width:620px;margin-bottom:1rem;
+  }
+  .o-hero p{
+    font-size:1rem;color:var(--text-soft);max-width:520px;line-height:1.7;
+    margin-bottom:1.5rem;
+  }
+  .o-pills{display:flex;flex-wrap:wrap;gap:.5rem}
+  .o-pill{
+    display:inline-flex;align-items:center;gap:.4rem;
+    padding:.4em 1em;border-radius:999px;font-size:.75rem;font-weight:600;
+    border:1.5px solid;
+  }
+  .o-pill::before{content:'';width:6px;height:6px;border-radius:50%}
+  .o-pill.terra{border-color:var(--terra);color:var(--terra);background:var(--terra-soft)}
+  .o-pill.terra::before{background:var(--terra)}
+  .o-pill.moss{border-color:var(--moss);color:var(--moss);background:var(--moss-soft)}
+  .o-pill.moss::before{background:var(--moss)}
+  .o-pill.clay{border-color:var(--clay);color:var(--clay);background:var(--clay-soft)}
+  .o-pill.clay::before{background:var(--clay)}
+  .o-pill.bark{border-color:var(--bark);color:var(--bark);background:var(--bark-soft)}
+  .o-pill.bark::before{background:var(--bark)}
+
+  /* ── SECTION TITLES ── */
+  .sec-head{
+    font-family:'Libre Baskerville',Georgia,serif;
+    font-size:1.4rem;font-weight:700;color:var(--bark);margin-bottom:.25rem;
+  }
+  .sec-sub{font-size:.88rem;color:var(--text-soft);margin-bottom:1.5rem}
+
+  /* ── POST CARDS ── */
+  .card-stack{display:flex;flex-direction:column;gap:.75rem;margin-bottom:3rem}
+  .o-card{
+    background:var(--cream);border-radius:var(--radius);
+    padding:1.5rem 1.75rem;
+    display:grid;grid-template-columns:56px 1fr auto;gap:1.25rem;
+    align-items:center;text-decoration:none;color:inherit;
+    transition:transform .25s,box-shadow .25s;
+    border:1.5px solid transparent;
+  }
+  .o-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 36px rgba(92,61,46,.07);
+    border-color:var(--warm);
+  }
+  .o-card-icon{
+    width:56px;height:56px;border-radius:16px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.4rem;flex-shrink:0;
+  }
+  .ic-terra{background:var(--terra-soft)}.ic-moss{background:var(--moss-soft)}
+  .ic-clay{background:var(--clay-soft)}.ic-bark{background:var(--bark-soft)}
+  .o-card-body h3{
+    font-family:'Libre Baskerville',Georgia,serif;
+    font-size:1rem;font-weight:700;color:var(--bark);margin-bottom:.2rem;line-height:1.3;
+  }
+  .o-card-body p{font-size:.84rem;color:var(--text-soft);line-height:1.5}
+  .o-card-date{
+    font-size:.72rem;color:var(--text-soft);white-space:nowrap;
+    font-weight:600;letter-spacing:.02em;
+  }
+
+  /* ── TWO-COLUMN FEATURE ── */
+  .o-split{
+    display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:3rem;
+  }
+
+  .o-info{
+    background:var(--cream);border-radius:var(--radius);padding:2.25rem;
+  }
+  .o-info h3{
+    font-family:'Libre Baskerville',Georgia,serif;
+    font-size:1.15rem;color:var(--bark);margin-bottom:.75rem;
+  }
+  .o-info p{font-size:.88rem;color:var(--text-soft);margin-bottom:.6rem;line-height:1.6}
+
+  /* stat row */
+  .stat-row{display:flex;gap:1.5rem;margin-top:1.2rem;flex-wrap:wrap}
+  .stat{text-align:center}
+  .stat-val{
+    font-family:'Libre Baskerville',Georgia,serif;
+    font-size:2.2rem;font-weight:700;color:var(--terra);display:block;line-height:1;
+  }
+  .stat-lbl{
+    font-size:.68rem;color:var(--text-soft);text-transform:uppercase;
+    letter-spacing:.12em;margin-top:.3rem;display:block;
+  }
+
+  /* quote card */
+  .o-quote{
+    background:var(--bark);border-radius:var(--radius);padding:2.5rem;
+    color:var(--sand);display:flex;flex-direction:column;justify-content:center;
+  }
+  .o-quote blockquote{
+    font-family:'Libre Baskerville',Georgia,serif;
+    font-style:italic;font-size:1.2rem;line-height:1.55;margin-bottom:1rem;
+  }
+  .o-quote cite{font-style:normal;font-size:.78rem;opacity:.65}
+
+  /* ── AGENT CARDS ── */
+  .agent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:3rem}
+  .agent-card{
+    background:var(--cream);border-radius:var(--radius);
+    padding:1.75rem;text-align:center;
+    border-top:4px solid var(--terra);
+    transition:transform .2s,box-shadow .2s;
+  }
+  .agent-card:nth-child(2){border-top-color:var(--moss)}
+  .agent-card:nth-child(3){border-top-color:var(--clay)}
+  .agent-card:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(92,61,46,.06)}
+  .agent-avatar{
+    width:48px;height:48px;border-radius:14px;margin:0 auto .75rem;
+    display:flex;align-items:center;justify-content:center;font-size:1.4rem;
+  }
+  .av-terra{background:var(--terra-soft)}.av-moss{background:var(--moss-soft)}.av-clay{background:var(--clay-soft)}
+  .agent-card h4{
+    font-family:'Libre Baskerville',serif;font-size:.95rem;font-weight:700;
+    color:var(--bark);margin-bottom:.3rem;
+  }
+  .agent-card .agent-role{
+    font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;
+    color:var(--text-soft);margin-bottom:.6rem;
+  }
+  .agent-card p{font-size:.82rem;color:var(--text-soft);line-height:1.5}
+
+  /* ── TIMELINE ── */
+  .timeline{
+    position:relative;padding-left:2.5rem;margin-bottom:3rem;
+  }
+  .timeline::before{
+    content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;
+    background:linear-gradient(180deg,var(--terra),var(--moss),var(--clay));
+    border-radius:999px;
+  }
+  .tl-item{
+    position:relative;padding:.8rem 0 1.2rem;
+  }
+  .tl-item::before{
+    content:'';position:absolute;left:-2.5rem;top:1rem;
+    width:12px;height:12px;border-radius:50%;
+    border:2px solid var(--terra);background:var(--cream);
+  }
+  .tl-item:nth-child(2n)::before{border-color:var(--moss)}
+  .tl-item:nth-child(3n)::before{border-color:var(--clay)}
+  .tl-time{font-size:.7rem;font-weight:600;color:var(--text-soft);text-transform:uppercase;letter-spacing:.1em}
+  .tl-title{
+    font-family:'Libre Baskerville',serif;font-size:.95rem;font-weight:700;
+    color:var(--bark);margin:.15rem 0;
+  }
+  .tl-title a{color:var(--bark)}
+  .tl-title a:hover{color:var(--terra)}
+  .tl-desc{font-size:.82rem;color:var(--text-soft);line-height:1.5}
+
+  /* ── FOOTER ── */
+  .o-footer{
+    padding:2rem 0;margin-top:1rem;
+    border-top:1.5px solid var(--warm);
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:.8rem;color:var(--text-soft);
+  }
+  .o-footer a{color:var(--terra);font-weight:600}
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:768px){
+    .o-hero{padding:2.5rem 1.5rem}
+    .o-split{grid-template-columns:1fr}
+    .agent-grid{grid-template-columns:1fr}
+    .o-card{grid-template-columns:48px 1fr;gap:.8rem}
+    .o-card-date{display:none}
+    .o-nav{flex-direction:column;gap:.6rem;align-items:flex-start}
+    .page{padding:0 1rem}
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<nav class="o-nav">
+  <a href="{{ '/index.html' | relative_url }}" class="o-brand">Saphid</a>
+  <div class="o-links">
+    <a href="{{ '/index.html' | relative_url }}">Home</a>
+    <a href="{{ '/1/index.html' | relative_url }}">Editorial</a>
+    <a href="{{ '/2/index.html' | relative_url }}">Control Panel</a>
+    <a href="{{ '/4/index.html' | relative_url }}">Brutalist</a>
+    <a href="{{ '/5/index.html' | relative_url }}">Lab</a>
+    <a href="{{ '/links.html' | relative_url }}">Links</a>
+  </div>
+</nav>
+
+<section class="o-hero">
+  <div class="o-hero-content">
+    <div class="o-eyebrow">Homelab Journal</div>
+    <h1>A quiet infrastructure, tended by patient agents</h1>
+    <p>The unhurried version. Systems as living things, agents as careful gardeners, infrastructure as something you cultivate rather than deploy.</p>
+    <div class="o-pills">
+      <span class="o-pill terra">Infrastructure</span>
+      <span class="o-pill moss">Home Automation</span>
+      <span class="o-pill clay">AI Agents</span>
+      <span class="o-pill bark">Build Logs</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── AGENTS ── -->
+<h2 class="sec-head">The Gardeners</h2>
+<p class="sec-sub">Three agents, three temperaments, one garden to tend.</p>
+<div class="agent-grid">
+  <div class="agent-card">
+    <div class="agent-avatar av-terra">&#x1F9D0;</div>
+    <h4>Claude Code</h4>
+    <div class="agent-role">The Auditor</div>
+    <p>Reads configs like a careful SRE. Plans changes methodically. Proposes infrastructure improvements through pull requests. The measured one.</p>
+  </div>
+  <div class="agent-card">
+    <div class="agent-avatar av-moss">&#x26A1;</div>
+    <h4>Codex</h4>
+    <div class="agent-role">The Builder</div>
+    <p>Translates ideas into working containers. Built the Kitchen Screen dashboard in a single session. Fast, focused, productive.</p>
+  </div>
+  <div class="agent-card">
+    <div class="agent-avatar av-clay">&#x1F319;</div>
+    <h4>Clawdbot</h4>
+    <div class="agent-role">The Night Watch</div>
+    <p>Monitors while the household sleeps. Checks backup integrity. Watches for anomalies. Escalates only when it matters.</p>
+  </div>
+</div>
+
+<!-- ── NOTES ── -->
+<h2 class="sec-head">Recent Notes</h2>
+<p class="sec-sub">Each entry is a snapshot of the system at a moment in time.</p>
+<div class="card-stack">
+  {% assign icons = "&#x1F5A5;,&#x1F4CA;,&#x1F34A;,&#x1F916;,&#x1F3E0;,&#x1F7E0;,&#x1F4F1;,&#x1F4FA;,&#x1F4BE;,&#x1F5BC;" | split: "," %}
+  {% assign bgs = "ic-terra,ic-moss,ic-clay,ic-bark,ic-terra,ic-moss,ic-clay,ic-bark,ic-terra,ic-moss" | split: "," %}
+  {% for post in site.posts %}
+  <a href="{{ post.url | relative_url }}" class="o-card">
+    <div class="o-card-icon {{ bgs[forloop.index0] }}">{{ icons[forloop.index0] }}</div>
+    <div class="o-card-body">
+      <h3>{{ post.title }}</h3>
+      <p>{{ post.content | strip_html | truncatewords: 18 }}</p>
+    </div>
+    <span class="o-card-date">{{ post.date | date: "%b %-d" }}</span>
+  </a>
+  {% endfor %}
+</div>
+
+<!-- ── SPLIT: STATS + QUOTE ── -->
+<div class="o-split">
+  <div class="o-info">
+    <h3>The Garden at a Glance</h3>
+    <p>Five machines, three agents, and a household that mostly doesn't notice it's all running. That's the point of good infrastructure — it disappears.</p>
+    <p>The numbers below are from this week's snapshot. They change slowly, like a garden should.</p>
+    <div class="stat-row">
+      <div class="stat"><span class="stat-val">{{ site.posts | size }}</span><span class="stat-lbl">Notes</span></div>
+      <div class="stat"><span class="stat-val">264</span><span class="stat-lbl">Sensors</span></div>
+      <div class="stat"><span class="stat-val">5</span><span class="stat-lbl">Systems</span></div>
+      <div class="stat"><span class="stat-val">11</span><span class="stat-lbl">Containers</span></div>
+      <div class="stat"><span class="stat-val">99.7</span><span class="stat-lbl">Uptime %</span></div>
+    </div>
+  </div>
+  <div class="o-quote">
+    <blockquote>"The best infrastructure disappears. You know it's working when nobody talks about it — they just live inside it."</blockquote>
+    <cite>— Observation from month three of the experiment</cite>
+  </div>
+</div>
+
+<!-- ── TIMELINE ── -->
+<h2 class="sec-head">Growing Season</h2>
+<p class="sec-sub">A chronological view of how the garden took shape.</p>
+<div class="timeline">
+  <div class="tl-item">
+    <div class="tl-time">Week 1</div>
+    <div class="tl-title">Planting the seed</div>
+    <div class="tl-desc">NurseDroid set up as the primary server. Docker installed. First containers: Home Assistant, Portainer, Mosquitto.</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-time">Week 3</div>
+    <div class="tl-title">First shoots</div>
+    <div class="tl-desc">Kitchen Screen dashboard deployed by Codex in a single session. Home Assistant entity count passes 100. Zigbee mesh established.</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-time">Week 5</div>
+    <div class="tl-title">Agents take root</div>
+    <div class="tl-desc">Clawdbot starts overnight monitoring. Claude Code begins auditing Docker configurations. The homelab starts to self-manage.</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-time">Week 8</div>
+    <div class="tl-title">The garden grows</div>
+    <div class="tl-desc">Orange Pi RV2 added for edge experiments. Termux on Pixel becomes a mobile operations terminal. 264 HA entities.</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-time">Now</div>
+    <div class="tl-title">A mature system</div>
+    <div class="tl-desc">Five machines, three agents, 11 containers. The family lives inside the infrastructure without thinking about it. Which is the whole point.</div>
+  </div>
+</div>
+
+<!-- ── PHILOSOPHY ── -->
+<div class="o-split">
+  <div class="o-info">
+    <h3>Why This Approach</h3>
+    <p>Most homelab blogs treat infrastructure as a puzzle to solve — optimize, benchmark, stack-rank. This site treats it more like gardening.</p>
+    <p>You plant things. You water them. Some die. Some thrive in ways you didn't expect. The agents are gardeners with different temperaments, and the infrastructure is what grows.</p>
+  </div>
+  <div class="o-info">
+    <h3>What's Growing Next</h3>
+    <p>Zigbee mesh expansion — the current bridge shows latency under load. Voice control integration is in testing. And an experiment in letting agents propose their own changes is being carefully scoped.</p>
+    <p>Slow and steady. Like a garden.</p>
+  </div>
+</div>
+
+<footer class="o-footer">
+  <span>Saphid · A warm take on infrastructure</span>
+  <a href="{{ '/index.html' | relative_url }}">← Back to main site</a>
+</footer>
+
+</div>
+
+</body>
+</html>
