@@ -2,13 +2,114 @@
 layout: default
 ---
 
-{{ content }}
+<section class="page-hero" data-reveal>
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <div class="eyebrow">Agent-built homelab log</div>
+      {{ content }}
+      <div class="hero-actions">
+        <a class="button-pill primary" href="#recent-posts">Read the build log</a>
+        <a class="button-pill secondary" href="{{ '/links.html' | relative_url }}">Open saved links</a>
+      </div>
+    </div>
+    <aside class="hero-panel">
+      <div class="signal-card">
+        <div class="eyebrow">Current envelope</div>
+        <h3>Infrastructure run by agents, not just documented by them</h3>
+        <p>The site now behaves like an operator console: motion, counters, and visible sections that read like a living system rather than a plain blog roll.</p>
+        <div class="signal-list">
+          <div class="signal-row"><span class="signal-dot"></span><span class="signal-label">Primary node</span><span class="signal-value">Nursedroid</span></div>
+          <div class="signal-row"><span class="signal-dot"></span><span class="signal-label">Control surface</span><span class="signal-value">Kitchen Screen</span></div>
+          <div class="signal-row"><span class="signal-dot"></span><span class="signal-label">Night operator</span><span class="signal-value">Clawdbot</span></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
 
-<h2>Recent Posts</h2>
-<ul class="post-list">
-  {% for post in site.posts %}
-  <li>
-    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-  </li>
-  {% endfor %}
-</ul>
+<section class="stats-grid" data-reveal>
+  <article class="metric-card">
+    <span class="metric-label">Posts</span>
+    <span class="metric-value" data-count-to="{{ site.posts | size }}">0</span>
+    <p class="metric-note">Build logs and guides in the archive.</p>
+  </article>
+  <article class="metric-card">
+    <span class="metric-label">Systems</span>
+    <span class="metric-value" data-count-to="5">0</span>
+    <p class="metric-note">Nursedroid, Pi wall display, Orange Pi, Termux, HA.</p>
+  </article>
+  <article class="metric-card">
+    <span class="metric-label">Sensors</span>
+    <span class="metric-value" data-count-to="264">0</span>
+    <p class="metric-note">Home Assistant entities wired into the setup.</p>
+  </article>
+  <article class="metric-card">
+    <span class="metric-label">Containers</span>
+    <span class="metric-value" data-count-to="11">0</span>
+    <p class="metric-note">Current NurseDroid Docker footprint.</p>
+  </article>
+</section>
+
+<section class="section-grid">
+  <article class="section-card" data-reveal>
+    <div class="eyebrow">Systems</div>
+    <h3>Machines with a job</h3>
+    <p>Each device in the homelab has a clear role and a linked operating note.</p>
+    <ul>
+      <li><a href="{{ '/nursedroid-home-server/' | relative_url }}">NurseDroid</a> for the heavy services</li>
+      <li><a href="{{ '/kitchen-screen-dashboard/' | relative_url }}">Kitchen Screen</a> for family-facing state</li>
+      <li><a href="{{ '/orange-pi-edge-device/' | relative_url }}">Orange Pi RV2</a> for edge experiments</li>
+    </ul>
+  </article>
+  <article class="section-card" data-reveal>
+    <div class="eyebrow">Guides</div>
+    <h3>Repeatable build notes</h3>
+    <p>Each guide keeps the manual steps and the agent-driven steps visible, so the work is reproducible.</p>
+    <ul>
+      <li><a href="{{ '/nursedroid-setup-guide/' | relative_url }}">Docker home server guide</a></li>
+      <li><a href="{{ '/kitchen-screen-setup-guide/' | relative_url }}">Kitchen dashboard guide</a></li>
+      <li><a href="{{ '/orange-pi-setup-guide/' | relative_url }}">Orange Pi setup guide</a></li>
+    </ul>
+  </article>
+  <article class="section-card" data-reveal>
+    <div class="eyebrow">Agents</div>
+    <h3>Different agents, different operating styles</h3>
+    <p>Claude Code, Codex, and Clawdbot each pushed the homelab in a different direction, which is part of the point of the archive.</p>
+    <ul>
+      <li>Claude Code for audits and planning</li>
+      <li>Codex for fast product delivery</li>
+      <li>Clawdbot for unattended overnight execution</li>
+    </ul>
+  </article>
+</section>
+
+<section class="reading-grid home-stream">
+  <div class="reading-width">
+    <div class="section-heading" id="recent-posts" data-reveal>
+      <div>
+        <div class="eyebrow">Archive</div>
+        <h2>Recent posts</h2>
+      </div>
+      <p>A cleaner index for the long-form notes, guides, and comparisons that came out of the experiment.</p>
+    </div>
+    <ul class="post-list">
+      {% for post in site.posts %}
+      <li data-reveal>
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <div class="post-meta">
+          <span>{{ post.date | date: "%B %-d, %Y" }}</span>
+          <div class="post-pillars">
+            <span class="post-pill">Build log</span>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <aside class="reading-panel" data-reveal>
+    <div class="eyebrow">Why this exists</div>
+    <h3>The interesting part is operational texture</h3>
+    <p>This is not a generic “my homelab” blog. The useful bit is the interaction between real household infrastructure and coding agents making decisions inside it.</p>
+    <p>The redesign leans into that angle: editorial typography, operator-console motifs, animated counters, and staged reveals that make the home page feel like a system summary instead of a markdown dump.</p>
+  </aside>
+</section>
