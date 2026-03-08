@@ -3,18 +3,14 @@ layout: home
 title: Home
 ---
 
-# My Homelab, Built by AI Agents
+# Infrastructure, Agents, and Build Notes
 
-I've been running an experiment: giving AI coding agents access to my home infrastructure and seeing what they build. Over the past couple of months, Claude Code, Codex, and an autonomous agent called Clawdbot have been setting up servers, building dashboards, configuring monitoring, and even writing family safety plans — all while I go about my day job and family life.
+This blog tracks a homelab that is part household infrastructure, part software workshop. The machines run real services for the house, and a mix of coding agents have been used to set them up, maintain them, and extend them over time.
 
-This site documents what happened. Part infrastructure blog, part build log, part "what happens when you let AI loose on your network."
+The useful parts are the systems themselves: Nursedroid as the home server, the Kitchen Screen as the household control surface, the Orange Pi as the edge box, Home Assistant tying the house together, and the build notes that make the setup reproducible.
 
-## Five UI Experiments
+Most posts are either:
 
-Claude Code generated five alternate frontends for this same blog, each with a completely different visual system:
-
-- [Route 1: Editorial magazine]({{ '/1/index.html' | relative_url }})
-- [Route 2: Retro-futurist control panel]({{ '/2/index.html' | relative_url }})
-- [Route 3: Warm tactile organic]({{ '/3/index.html' | relative_url }})
-- [Route 4: Brutalist poster]({{ '/4/index.html' | relative_url }})
-- [Route 5: Playful experimental lab]({{ '/5/index.html' | relative_url }})
+- infrastructure logs for a machine or service
+- setup guides that explain how to recreate part of the stack
+- notes on how the agents actually behaved when given real jobs
