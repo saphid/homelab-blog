@@ -3,10 +3,10 @@ layout: home
 title: Home
 ---
 
-# Infrastructure, Agents, and Build Notes
+# A Family Homelab with Cameras, Dashboards, Sensors, and Agents
 
-This site is a cleaned-up record of a real homelab that has been built and maintained with help from coding agents. The important thing is not the agent hype. The important thing is what is actually running, what changed over time, and which parts of the story are current state versus archived build history.
+NurseDroid runs the heavy services. A Raspberry Pi 5 on the kitchen wall shows photos, calendars, weather, and camera feeds. An Orange Pi RV2 handles monitoring and flow capture. A spare Pixel in Termux feeds live Android sensor data back into Home Assistant. This blog is the operating log for how those pieces fit together.
 
-I re-audited the systems and the Codex session history on March 8, 2026. The pages here now aim to be explicit about what was verified live, what comes from archived session logs, and where earlier blog drafts had drifted away from reality.
+Some of the work was done by coding agents, some by hand, and most of it got messier before it got useful. The posts focus on the systems, the decisions, and the failure modes rather than pretending the whole thing arrived fully planned.
 
-The main systems covered here are NurseDroid, the kitchen screen, the Orange Pi monitoring node, the Termux Pixel phone, and Home Assistant.
+The main systems covered here are NurseDroid, the kitchen screen, the Orange Pi monitoring node, the Termux Pixel phone, and Home Assistant, with a separate audit snapshot for the current verified shape of the setup.
