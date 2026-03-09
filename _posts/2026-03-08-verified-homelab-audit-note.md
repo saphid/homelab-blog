@@ -69,12 +69,4 @@ This kind of post is useful only if it keeps current state honest.
 
 The kitchen screen, the Pixel bridge, and NurseDroid all still have clear live evidence. The Orange Pi does not in this session. That distinction is exactly what the blog workflow needs to preserve if the posts are going to be worth reading later.
 
-## Evidence Commands
-
-```bash
-ssh -o BatchMode=yes -o ConnectTimeout=8 <main-host> 'docker ps --format "table {{.Names}}\t{{.Status}}" | sed -n "1,20p"'
-ssh -o BatchMode=yes -o ConnectTimeout=8 <android-bridge> 'getprop ro.product.model; getprop ro.product.device; pgrep -x sshd; pgrep -af android-ha-api.py || true'
-curl -fsS http://<android-bridge>:8080/healthz
-ssh -o BatchMode=yes -o ConnectTimeout=8 <kitchen-screen-host> 'curl -fsS http://127.0.0.1:8126/health'
-ssh -o BatchMode=yes -o ConnectTimeout=8 <kitchen-screen-host> 'curl -fsS http://127.0.0.1:8126/api/home_summary | head -c 600'
-```
+The underlying checks were run during the audit, but the raw verification commands are intentionally left out of the public post.
