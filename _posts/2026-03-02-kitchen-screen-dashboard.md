@@ -2,6 +2,10 @@
 layout: post
 title: "Kitchen Screen — The Family Dashboard"
 date: 2026-03-02
+tags:
+  - kitchen-screen
+  - home-assistant
+  - deployment
 ---
 
 # Kitchen Screen — The Family Dashboard

@@ -2,6 +2,9 @@
 layout: post
 title: "Setting Up a Kitchen Dashboard"
 date: 2026-03-02
+tags:
+  - kitchen-screen
+  - setup-guide
 ---
 
 # Setting Up a Kitchen Dashboard

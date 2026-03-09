@@ -2,116 +2,99 @@
 layout: default
 ---
 
-<section class="page-hero" data-reveal>
-  <div class="hero-grid">
-    <div class="hero-copy">
-      <div class="eyebrow">Verified homelab log</div>
-      {{ content }}
-      <div class="hero-actions">
-        <a class="button-pill primary" href="#recent-posts">Read the posts</a>
-        <a class="button-pill secondary" href="{{ '/homelab-audit-snapshot-march-8-2026/' | relative_url }}">Open the audit snapshot</a>
+<div class="home-layout">
+  <div class="home-main">
+    <section class="page-intro page-intro--home">
+      <div class="page-intro__copy">
+        {{ content }}
+        <p class="intro-note">Start with <a href="{{ '/homelab-audit-snapshot-march-8-2026/' | relative_url }}">Homelab Audit Snapshot — March 8, 2026</a> if you want the clearest current snapshot before reading the individual system pages.</p>
       </div>
-    </div>
-    <aside class="hero-panel">
-      <div class="signal-card">
-        <div class="eyebrow">Audit note</div>
-        <h3>Current state and build history are no longer mixed together</h3>
-        <p>The earlier blog drafts blurred original build notes with present-day reality. The rewrite fixes that by checking the hosts, the running services, and the old Codex session logs side by side.</p>
-        <div class="signal-list">
-          <div class="signal-row"><span class="signal-dot"></span><span class="signal-label">Primary node</span><span class="signal-value">NurseDroid</span></div>
-          <div class="signal-row"><span class="signal-dot"></span><span class="signal-label">Control surface</span><span class="signal-value">Kitchen Screen</span></div>
-          <div class="signal-row"><span class="signal-dot"></span><span class="signal-label">Monitoring node</span><span class="signal-value">Orange Pi RV2</span></div>
-          <div class="signal-row"><span class="signal-dot"></span><span class="signal-label">Sensor bridge</span><span class="signal-value">Pixel 3 in Termux</span></div>
+    </section>
+
+    <section class="section-block">
+      <div class="section-heading">
+        <div>
+          <h2>Archive</h2>
+          <p>Newest posts first, with system and workflow tags attached.</p>
         </div>
       </div>
-    </aside>
-  </div>
-</section>
-
-<section class="stats-grid" data-reveal>
-  <article class="metric-card">
-    <span class="metric-label">Posts</span>
-    <span class="metric-value" data-count-to="{{ site.posts | size }}">0</span>
-    <p class="metric-note">Audited notes, system writeups, and setup guides.</p>
-  </article>
-  <article class="metric-card">
-    <span class="metric-label">Systems</span>
-    <span class="metric-value" data-count-to="5">0</span>
-    <p class="metric-note">NurseDroid, Kitchen Screen, Orange Pi, Termux Pixel, Home Assistant.</p>
-  </article>
-  <article class="metric-card">
-    <span class="metric-label">HA Entities</span>
-    <span class="metric-value" data-count-to="1160">0</span>
-    <p class="metric-note">Live Home Assistant entity count from the March 8, 2026 audit.</p>
-  </article>
-  <article class="metric-card">
-    <span class="metric-label">Containers</span>
-    <span class="metric-value" data-count-to="12">0</span>
-    <p class="metric-note">Currently running containers on NurseDroid at audit time.</p>
-  </article>
-</section>
-
-<section class="section-grid">
-  <article class="section-card" data-reveal>
-    <div class="eyebrow">Verified now</div>
-    <h3>What is definitely running</h3>
-    <p>The current state is grounded in live checks, not memory.</p>
-    <ul>
-      <li><a href="{{ '/nursedroid-home-server/' | relative_url }}">NurseDroid</a> is running 12 containers plus the Clawd cron/system script layer.</li>
-      <li><a href="{{ '/orange-pi-edge-device/' | relative_url }}">Orange Pi RV2</a> is live on Ubuntu 24.04.4 with Prometheus, Grafana, PostgreSQL, exporters, and NetFlow capture.</li>
-      <li><a href="{{ '/kitchen-screen-dashboard/' | relative_url }}">Kitchen Screen</a> is a Pi 5 running the current <code>next-dashboard</code> stack.</li>
-    </ul>
-  </article>
-  <article class="section-card" data-reveal>
-    <div class="eyebrow">Historical context</div>
-    <h3>How the systems got here</h3>
-    <p>The archived Codex sessions still matter, but they are now treated as build history rather than present-tense truth.</p>
-    <ul>
-      <li>The kitchen screen started as a <code>fridge-dashboard</code> Flask app and later moved to a Next.js monorepo.</li>
-      <li>The Orange Pi moved from SD boot to eMMC and from “competition experiment” to real monitoring node.</li>
-      <li>The Termux phone shifted from OpenClaw ambitions to a practical Android sensor and HA bridge.</li>
-    </ul>
-  </article>
-  <article class="section-card" data-reveal>
-    <div class="eyebrow">Useful reading</div>
-    <h3>Start with the pages that have the clearest ground truth</h3>
-    <p>If you want the most accurate picture of the setup, start with the live-audited pages and then read the guides.</p>
-    <ul>
-      <li><a href="{{ '/homelab-audit-snapshot-march-8-2026/' | relative_url }}">Homelab audit snapshot</a></li>
-      <li><a href="{{ '/home-assistant-smart-home/' | relative_url }}">Home Assistant</a> and the <a href="{{ '/home-assistant-setup-guide/' | relative_url }}">integration guide</a></li>
-      <li><a href="{{ '/termux-clawd-pixel-phone/' | relative_url }}">Termux Pixel phone</a> for the Android sensor bridge</li>
-    </ul>
-  </article>
-</section>
-
-<section class="reading-grid home-stream">
-  <div class="reading-width">
-    <div class="section-heading" id="recent-posts" data-reveal>
-      <div>
-        <div class="eyebrow">Archive</div>
-        <h2>Recent posts</h2>
-      </div>
-      <p>The long-form notes now bias toward accuracy and scope, not toward telling the cleanest possible story.</p>
-    </div>
-    <ul class="post-list">
-      {% for post in site.posts %}
-      <li data-reveal>
-        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        <div class="post-meta">
-          <span>{{ post.date | date: "%B %-d, %Y" }}</span>
-          <div class="post-pillars">
-            <span class="post-pill">Build log</span>
+      <div class="post-rows">
+        {% for post in site.posts %}
+        <article class="post-row">
+          <div class="post-row__main">
+            <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+            <p>{{ post.excerpt | strip_html | strip_newlines | truncate: 160 }}</p>
           </div>
-        </div>
-      </li>
-      {% endfor %}
-    </ul>
+          <div class="post-row__meta">
+            <p class="meta-date">{{ post.date | date: "%B %-d, %Y" }}</p>
+            {% if post.tags and post.tags.size > 0 %}
+            <div class="meta-links">
+              {% for tag in post.tags %}
+              <a class="meta-link" href="{{ '/tags/#' | append: (tag | slugify) | relative_url }}">{{ tag }}</a>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
   </div>
-  <aside class="reading-panel" data-reveal>
-    <div class="eyebrow">Quick links</div>
-    <h3>Content first, chrome second</h3>
-    <p>The blog is now organized around the actual infrastructure and the notes that explain it.</p>
-    <p><a href="{{ '/nursedroid-home-server/' | relative_url }}">NurseDroid</a><br><a href="{{ '/kitchen-screen-dashboard/' | relative_url }}">Kitchen Screen</a><br><a href="{{ '/orange-pi-edge-device/' | relative_url }}">Orange Pi RV2</a><br><a href="{{ '/termux-clawd-pixel-phone/' | relative_url }}">Termux Pixel</a><br><a href="{{ '/home-assistant-smart-home/' | relative_url }}">Home Assistant</a><br><a href="{{ '/links.html' | relative_url }}">Saved links</a></p>
-    <p>The March 8, 2026 audit checked live hosts, local cron/system services, and archived Codex sessions before these pages were rewritten.</p>
+
+  <aside class="home-rail">
+    <section class="rail-section">
+      <h2>Start here</h2>
+      <ul class="plain-list">
+        <li><a href="{{ '/homelab-audit-snapshot-march-8-2026/' | relative_url }}">Latest audit</a></li>
+        <li><a href="{{ '/tags/' | relative_url }}">Browse all tags</a></li>
+        <li><a href="{{ '/links.html' | relative_url }}">Reference links</a></li>
+      </ul>
+    </section>
+
+    <section class="rail-section">
+      <h2>Systems</h2>
+      <div class="directory-list">
+        <article class="directory-row directory-row--compact">
+          <div class="directory-row__main">
+            <h3><a href="{{ '/nursedroid-home-server/' | relative_url }}">NurseDroid</a></h3>
+            <p>Main Linux host for containers, sync jobs, and cron-driven glue.</p>
+          </div>
+        </article>
+        <article class="directory-row directory-row--compact">
+          <div class="directory-row__main">
+            <h3><a href="{{ '/kitchen-screen-dashboard/' | relative_url }}">Kitchen Screen</a></h3>
+            <p>Wall-mounted Raspberry Pi dashboard for family-facing data.</p>
+          </div>
+        </article>
+        <article class="directory-row directory-row--compact">
+          <div class="directory-row__main">
+            <h3><a href="{{ '/orange-pi-edge-device/' | relative_url }}">Orange Pi RV2</a></h3>
+            <p>Monitoring node for observability, exporters, and flow capture.</p>
+          </div>
+        </article>
+        <article class="directory-row directory-row--compact">
+          <div class="directory-row__main">
+            <h3><a href="{{ '/termux-clawd-pixel-phone/' | relative_url }}">Pixel Termux</a></h3>
+            <p>Android bridge feeding phone sensor data back into Home Assistant.</p>
+          </div>
+        </article>
+        <article class="directory-row directory-row--compact">
+          <div class="directory-row__main">
+            <h3><a href="{{ '/home-assistant-smart-home/' | relative_url }}">Home Assistant</a></h3>
+            <p>Automation and entity hub tying the rest of the setup together.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="rail-section">
+      <h2>Browse by topic</h2>
+      <ul class="plain-list">
+        <li><a href="{{ '/tags/#audit' | relative_url }}">Audit</a></li>
+        <li><a href="{{ '/tags/#setup-guide' | relative_url }}">Setup Guide</a></li>
+        <li><a href="{{ '/tags/#deployment' | relative_url }}">Deployment</a></li>
+        <li><a href="{{ '/tags/#comparison' | relative_url }}">Comparison</a></li>
+      </ul>
+    </section>
   </aside>
-</section>
+</div>

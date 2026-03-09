@@ -2,9 +2,40 @@
 layout: default
 ---
 
-<article class="post" data-reveal>
-  <header class="post-header">
-    <p class="post-date">{{ page.date | date: "%B %-d, %Y" }}</p>
-  </header>
-  {{ content }}
+<article class="article-layout">
+  <div class="article-main">
+    <header class="article-header">
+      <p class="meta-date">{{ page.date | date: "%B %-d, %Y" }}</p>
+      <h1>{{ page.title }}</h1>
+      {% if page.tags and page.tags.size > 0 %}
+      <div class="meta-links">
+        {% for tag in page.tags %}
+        <a class="meta-link" href="{{ '/tags/#' | append: (tag | slugify) | relative_url }}">{{ tag }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </header>
+    <div class="article-body">
+      {{ content }}
+    </div>
+  </div>
+  <aside class="article-aside">
+    {% if page.tags and page.tags.size > 0 %}
+    <section class="aside-section">
+      <h2>Filed under</h2>
+      <div class="meta-links">
+        {% for tag in page.tags %}
+        <a class="meta-link" href="{{ '/tags/#' | append: (tag | slugify) | relative_url }}">{{ tag }}</a>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+    <section class="aside-section">
+      <h2>Browse</h2>
+      <ul class="compact-list">
+        <li><a href="{{ '/tags/' | relative_url }}">Tag archive</a><span>all tags</span></li>
+        <li><a href="{{ '/homelab-audit-snapshot-march-8-2026/' | relative_url }}">Latest audit</a><span>reference</span></li>
+      </ul>
+    </section>
+  </aside>
 </article>

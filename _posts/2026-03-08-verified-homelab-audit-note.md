@@ -1,0 +1,80 @@
+---
+layout: post
+title: "Verified Homelab Audit Note - March 8, 2026"
+date: 2026-03-08
+tags:
+  - audit
+  - nursedroid
+  - kitchen-screen
+  - pixel-termux
+  - home-assistant
+  - deployment
+---
+
+# Verified Homelab Audit Note - March 8, 2026
+
+This note is based on live checks from the control workspace on March 8, 2026. It separates what I actually re-verified today from older build history that still exists in the other repos and blog drafts.
+
+## Active Workspaces
+
+The clearest homelab activity in Codex session metadata today was:
+
+- `/Users/alexsouthwell/PersonalCode/kitchenscreen`
+- `/Users/alexsouthwell/PersonalCode/pixelserver`
+- `/Users/alexsouthwell/PersonalCode/skills_building`
+- `/Users/alexsouthwell/PersonalCode/homelab_blog`
+
+That lines up with the systems I could directly re-check from this machine: the kitchen dashboard, the Pixel Termux bridge, the blog publishing path, and NurseDroid as the main service host behind them.
+
+## Verified Live State
+
+### NurseDroid
+
+NurseDroid is reachable and currently has 12 Docker containers up, including the Immich stack, Grafana, Syncthing, Portainer, FreshRSS, Calibre, and Transmission.
+
+The more important detail is the cron layer around `/home/saphid/clawd`. The active crontab still includes Android-to-Home-Assistant sync, Android stack health checks, phone watchdog checks, OpenClaw runtime checks, and a Home Assistant history sync job aimed at the Orange Pi. That means the box is still doing orchestration work as well as service hosting.
+
+### Pixel 3 in Termux
+
+The Pixel path is live and useful rather than hypothetical.
+
+- SSH identity checks returned `Pixel 3`, device `blueline`, and user `u0_a295`
+- `sshd` is running
+- `android-ha-api.py` is running
+- `http://192.168.1.118:8080/healthz` returned `status=ok`
+
+That is enough to support a narrow but solid claim: the phone is currently operating as an Android sensor and API bridge for the rest of the homelab.
+
+### Kitchen Screen
+
+The kitchen display host is reachable and still running the newer `next-dashboard` stack.
+
+- `run-kiosk.sh` is running
+- `kiosk-watchdog.sh` is running
+- `next start` is running
+- API health returned version `v2026.03.08.07`
+- `/api/home_summary` returned live weather and people data
+
+This is the strongest present-tense proof that the kitchen screen is not just an old build story. It is still an active household display pulling real data today.
+
+## Blockers And Unknowns
+
+The Orange Pi RV2 was not reachable from this workspace during the current audit. The `orangepi` alias did not resolve locally and the direct LAN SSH attempt timed out.
+
+So the right thing to say is not "the Orange Pi is definitely live." The right thing to say is that older notes exist about it, NurseDroid still has a sync job targeting it, and current live verification is blocked until SSH is working again from this machine.
+
+## Why This Matters
+
+This kind of post is useful only if it keeps current state honest.
+
+The kitchen screen, the Pixel bridge, and NurseDroid all still have clear live evidence. The Orange Pi does not in this session. That distinction is exactly what the blog workflow needs to preserve if the posts are going to be worth reading later.
+
+## Evidence Commands
+
+```bash
+ssh -o BatchMode=yes -o ConnectTimeout=8 NurseDroid 'docker ps --format "table {{.Names}}\t{{.Status}}" | sed -n "1,20p"'
+ssh -o BatchMode=yes -o ConnectTimeout=8 pixel-floor 'whoami; getprop ro.product.model; getprop ro.product.device; pgrep -x sshd; pgrep -af android-ha-api.py || true'
+curl -fsS http://192.168.1.118:8080/healthz
+ssh -o BatchMode=yes -o ConnectTimeout=8 kitchenscreen@192.168.1.143 'curl -fsS http://127.0.0.1:8126/health'
+ssh -o BatchMode=yes -o ConnectTimeout=8 kitchenscreen@192.168.1.143 'curl -fsS http://127.0.0.1:8126/api/home_summary | head -c 600'
+```

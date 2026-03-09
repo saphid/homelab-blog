@@ -2,6 +2,10 @@
 layout: post
 title: "Raspberry Pi 5 vs Orange Pi RV2"
 date: 2026-03-02
+tags:
+  - kitchen-screen
+  - orange-pi-rv2
+  - comparison
 ---
 
 # Raspberry Pi 5 vs Orange Pi RV2

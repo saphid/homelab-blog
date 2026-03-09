@@ -3,9 +3,11 @@
 *.key
 client-secret*.json
 credentials.json
+.auth/
 _site/
 .jekyll-cache/
 .bundle/
 vendor/
 .sass-cache/
+dist/
 node_modules/

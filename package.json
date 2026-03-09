@@ -1,0 +1,21 @@
+{
+  "name": "homelab-blog",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsx scripts/build-site.ts",
+    "preview": "python3 -m http.server 4173 -d dist",
+    "check": "pnpm build",
+    "stage:approved": "tsx scripts/stage-approved-draft.ts"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "markdown-it": "^14.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  },
+  "packageManager": "pnpm@10.28.1"
+}

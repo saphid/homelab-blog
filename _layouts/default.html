@@ -1,45 +1,42 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if page.title %}{{ page.title }} — {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 </head>
 <body>
-  <div class="scroll-progress" aria-hidden="true"></div>
-  <div class="page-shell">
-    <header class="site-header">
-      <div class="container">
-        <a class="site-title" href="{{ '/' | relative_url }}">Saphid Signal Map</a>
-        <nav class="site-nav">
-          <a href="{{ '/' | relative_url }}">Home</a>
-          <a href="{{ '/homelab-audit-snapshot-march-8-2026/' | relative_url }}">Snapshot</a>
-          <a href="{{ '/nursedroid-home-server/' | relative_url }}">NurseDroid</a>
-          <a href="{{ '/kitchen-screen-dashboard/' | relative_url }}">Kitchen Screen</a>
-          <a href="{{ '/orange-pi-edge-device/' | relative_url }}">Orange Pi</a>
-          <a href="{{ '/termux-clawd-pixel-phone/' | relative_url }}">Termux</a>
-          <a href="{{ '/links.html' | relative_url }}">Links</a>
-          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
-            <span class="icon-sun">Sun</span>
-            <span class="icon-moon">Moon</span>
-          </button>
-        </nav>
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <div class="brand-block">
+        <a class="site-title" href="{{ '/' | relative_url }}">Saphid / Homelab</a>
+        <p class="site-description">{{ site.description }}</p>
       </div>
-    </header>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="{{ '/' | relative_url }}" data-nav-link>Home</a>
+        <a href="{{ '/homelab-audit-snapshot-march-8-2026/' | relative_url }}" data-nav-link>Latest audit</a>
+        <a href="{{ '/tags/' | relative_url }}" data-nav-link>Tags</a>
+        <a href="{{ '/links.html' | relative_url }}" data-nav-link>Links</a>
+      </nav>
+    </div>
+  </header>
 
-    <main class="site-main">
-      <div class="container">
-        {{ content }}
-      </div>
-    </main>
+  <main class="site-main">
+    <div class="container">
+      {{ content }}
+    </div>
+  </main>
 
-    <footer class="site-footer">
-      <div class="container">
-        <p>&copy; {{ 'now' | date: "%Y" }} Saphid &middot; Live host checks plus archived agent session notes &middot; <a href="https://github.com/saphid/homelab-blog">Source</a></p>
-      </div>
-    </footer>
-  </div>
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>Verified notes, setup guides, and audit snapshots.</p>
+      <p><a href="https://github.com/saphid/homelab-blog">Source</a></p>
+    </div>
+  </footer>
 
   <script src="{{ '/assets/js/site.js' | relative_url }}"></script>
 </body>

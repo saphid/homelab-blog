@@ -2,6 +2,10 @@
 layout: post
 title: "NurseDroid — The Home Server"
 date: 2026-03-02
+tags:
+  - nursedroid
+  - deployment
+  - observability
 ---
 
 # NurseDroid — The Home Server

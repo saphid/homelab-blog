@@ -2,6 +2,10 @@
 layout: post
 title: "Termux Clawd — The Pixel Phone"
 date: 2026-03-02
+tags:
+  - pixel-termux
+  - home-assistant
+  - automation
 ---
 
 # Termux Clawd — The Pixel Phone

@@ -2,6 +2,11 @@
 layout: post
 title: "Setting Up Home Assistant Integrations"
 date: 2026-03-02
+tags:
+  - home-assistant
+  - pixel-termux
+  - kitchen-screen
+  - setup-guide
 ---
 
 # Setting Up Home Assistant Integrations
@@ -79,8 +84,8 @@ The actual sync shape is:
 ```python
 import requests
 
-ANDROID_API = "http://phone-node:8080"
-HA_BASE = "http://homeassistant.local:8123"
+ANDROID_API = "http://android-bridge:8080"
+HA_BASE = "http://home-assistant:8123"
 
 def fetch(path):
     return requests.get(f"{ANDROID_API}/{path}", timeout=15).json()

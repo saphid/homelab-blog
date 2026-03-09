@@ -2,6 +2,9 @@
 layout: post
 title: "Home Assistant — The Smart Home Brain"
 date: 2026-03-02
+tags:
+  - home-assistant
+  - deployment
 ---
 
 # Home Assistant — The Smart Home Brain

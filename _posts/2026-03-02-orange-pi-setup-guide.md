@@ -2,6 +2,10 @@
 layout: post
 title: "Setting Up an Orange Pi RV2 Monitoring Node"
 date: 2026-03-02
+tags:
+  - orange-pi-rv2
+  - setup-guide
+  - observability
 ---
 
 # Setting Up an Orange Pi RV2 Monitoring Node

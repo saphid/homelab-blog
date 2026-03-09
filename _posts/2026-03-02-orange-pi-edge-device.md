@@ -2,6 +2,10 @@
 layout: post
 title: "Orange Pi RV2 — The Edge Device"
 date: 2026-03-02
+tags:
+  - orange-pi-rv2
+  - observability
+  - deployment
 ---
 
 # Orange Pi RV2 — The Edge Device

@@ -3,112 +3,97 @@ layout: default
 title: Links
 ---
 
-<section class="page-hero" data-reveal>
-  <div class="hero-grid">
-    <div class="hero-copy">
-      <div class="eyebrow">Field notes</div>
-      <h1>Links worth keeping</h1>
-      <p class="links-intro">Stuff I keep coming back to while building and operating the homelab. Mostly agent tooling, developer infrastructure, and writing that improves how I think about systems work.</p>
-      <div class="hero-actions">
-        <a class="button-pill primary" href="{{ '/' | relative_url }}">Back to home</a>
-      </div>
-    </div>
-    <aside class="hero-panel">
-      <div class="signal-card">
-        <div class="eyebrow">Why this page exists</div>
-        <h3>A working reading list, not a design exercise</h3>
-        <p>The home page is for the infrastructure itself. This page is for the references that helped shape it.</p>
-      </div>
-    </aside>
+<section class="page-intro">
+  <div class="page-intro__copy">
+    <h1>Links</h1>
+    <p>This is the working reference shelf behind the blog: protocols, tools, threads, and writing that keep proving useful while building and operating the homelab.</p>
   </div>
 </section>
 
-<div class="links-grid">
-
-  <article class="link-card">
-    <a class="link-thumb" href="https://agentclientprotocol.com/get-started/introduction" target="_blank" rel="noopener">
-      <img src="https://www.google.com/s2/favicons?domain=agentclientprotocol.com&sz=256" alt="ACP" loading="lazy" style="object-fit:contain;padding:24px;background:#111" />
-    </a>
-    <div class="link-body">
-      <div class="link-domain"><img src="https://www.google.com/s2/favicons?domain=agentclientprotocol.com&sz=64" alt="ACP"/>agentclientprotocol.com</div>
-      <h3><a href="https://agentclientprotocol.com/get-started/introduction" target="_blank" rel="noopener">Agent Client Protocol - Get Started</a></h3>
-      <p>A protocol for building AI agent clients. Standard interface for agent communication and orchestration.</p>
-      <div class="link-meta">Added: 2026-03-08</div>
+<section class="section-block">
+  <div class="section-heading">
+    <div>
+      <h2>Reference shelf</h2>
+      <p>Useful enough to revisit, not just saved once and forgotten.</p>
     </div>
-  </article>
+    <a class="section-link" href="{{ '/' | relative_url }}">Back to home</a>
+  </div>
+  <div class="link-directory">
+    <article class="link-row">
+      <div>
+        <h3><a href="https://agentclientprotocol.com/get-started/introduction" target="_blank" rel="noopener">Agent Client Protocol - Get Started</a></h3>
+        <p>A protocol for building AI agent clients and orchestration surfaces.</p>
+      </div>
+      <div class="link-row__meta">
+        <span>agentclientprotocol.com</span>
+        <span>Added 2026-03-08</span>
+      </div>
+    </article>
 
-  <article class="link-card">
-    <a class="link-thumb" href="https://github.com/steipete/discrawl" target="_blank" rel="noopener">
-      <img src="https://www.google.com/s2/favicons?domain=github.com&sz=256" alt="GitHub" loading="lazy" style="object-fit:contain;padding:24px;background:#111" />
-    </a>
-    <div class="link-body">
-      <div class="link-domain"><img src="https://www.google.com/s2/favicons?domain=github.com&sz=64" alt="GitHub"/>github.com</div>
-      <h3><a href="https://github.com/steipete/discrawl" target="_blank" rel="noopener">Discrawl - Discord CLI with SQLite Backend</a></h3>
-      <p>CLI tool that mirrors Discord guild data into local SQLite for search and analysis. Bot-token based, data stays local.</p>
-      <div class="link-meta">Added: 2026-03-08</div>
-    </div>
-  </article>
+    <article class="link-row">
+      <div>
+        <h3><a href="https://github.com/steipete/discrawl" target="_blank" rel="noopener">Discrawl</a></h3>
+        <p>Discord CLI with a local SQLite mirror for search and analysis.</p>
+      </div>
+      <div class="link-row__meta">
+        <span>github.com</span>
+        <span>Added 2026-03-08</span>
+      </div>
+    </article>
 
-  <article class="link-card">
-    <a class="link-thumb" href="https://x.com/heynavtoor/status/2028922003365986705" target="_blank" rel="noopener">
-      <img src="https://pbs.twimg.com/media/HCgtzz0aUAA-oE9.jpg:large" alt="Nav Toor post" loading="lazy" />
-    </a>
-    <div class="link-body">
-      <div class="link-domain"><img src="https://abs.twimg.com/favicons/twitter.3.ico" alt="X"/>x.com</div>
-      <h3><a href="https://x.com/heynavtoor/status/2028922003365986705" target="_blank" rel="noopener">Nav Toor: agent bottleneck + browser control API</a></h3>
-      <p>Argument that a small local binary can remove major browser-automation friction for agents and make orchestration framework-agnostic.</p>
-      <div class="link-meta">Added: 2026-03-04</div>
-    </div>
-  </article>
+    <article class="link-row">
+      <div>
+        <h3><a href="https://www.neverjust.net/" target="_blank" rel="noopener">neverjust</a></h3>
+        <p>Practical writing guidance for engineers who need to communicate clearly in public and async.</p>
+      </div>
+      <div class="link-row__meta">
+        <span>neverjust.net</span>
+        <span>Added 2026-03-04</span>
+      </div>
+    </article>
 
-  <article class="link-card">
-    <a class="link-thumb" href="https://www.neverjust.net/" target="_blank" rel="noopener">
-      <img src="https://www.neverjust.net/twitter-image.png?fcfb5c7c48aa740e" alt="neverjust" loading="lazy" />
-    </a>
-    <div class="link-body">
-      <div class="link-domain"><img src="https://www.google.com/s2/favicons?domain=neverjust.net&sz=64" alt="neverjust"/>neverjust.net</div>
-      <h3><a href="https://www.neverjust.net/" target="_blank" rel="noopener">neverjust — better developer communication</a></h3>
-      <p>A practical writing reference for engineers: clarity over noise, especially in async and technical collaboration.</p>
-      <div class="link-meta">Added: 2026-03-04</div>
-    </div>
-  </article>
+    <article class="link-row">
+      <div>
+        <h3><a href="https://x.com/heynavtoor/status/2028922003365986705" target="_blank" rel="noopener">Nav Toor on agent bottlenecks and browser control</a></h3>
+        <p>A useful argument for reducing browser-control friction with a small local binary instead of framework-specific orchestration glue.</p>
+      </div>
+      <div class="link-row__meta">
+        <span>x.com</span>
+        <span>Added 2026-03-04</span>
+      </div>
+    </article>
 
-  <article class="link-card">
-    <a class="link-thumb" href="https://x.com/artemxtech/status/2028330693659332615" target="_blank" rel="noopener">
-      <img src="https://pbs.twimg.com/media/HCYS1T7W0AAnTkm.jpg:large" alt="Artem post" loading="lazy" />
-    </a>
-    <div class="link-body">
-      <div class="link-domain"><img src="https://abs.twimg.com/favicons/twitter.3.ico" alt="X"/>x.com</div>
-      <h3><a href="https://x.com/artemxtech/status/2028330693659332615" target="_blank" rel="noopener">ArtemXTech: "Grep Is Dead" memory workflow</a></h3>
-      <p>Replacing brittle grep-only workflows with stronger memory and recall pipelines for long-running coding-agent sessions.</p>
-      <div class="link-meta">Added: 2026-03-04</div>
-    </div>
-  </article>
+    <article class="link-row">
+      <div>
+        <h3><a href="https://x.com/artemxtech/status/2028330693659332615" target="_blank" rel="noopener">ArtemXTech on memory-first workflows</a></h3>
+        <p>A reminder that long-running coding sessions need recall and structure, not just grep and luck.</p>
+      </div>
+      <div class="link-row__meta">
+        <span>x.com</span>
+        <span>Added 2026-03-04</span>
+      </div>
+    </article>
 
+    <article class="link-row">
+      <div>
+        <h3><a href="https://x.com/code_rams/status/2029661481810510175" target="_blank" rel="noopener">code_rams Codex thread</a></h3>
+        <p>Short thread saved from the feed queue for ongoing coding-agent tracking.</p>
+      </div>
+      <div class="link-row__meta">
+        <span>x.com</span>
+        <span>Added 2026-03-06</span>
+      </div>
+    </article>
 
-
-  <article class="link-card">
-    <a class="link-thumb" href="https://x.com/code_rams/status/2029661481810510175" target="_blank" rel="noopener">
-      <img src="https://pbs.twimg.com/media/HCrc8__WwAAUu3f.jpg:large" alt="code_rams post" loading="lazy" />
-    </a>
-    <div class="link-body">
-      <div class="link-domain"><img src="https://abs.twimg.com/favicons/twitter.3.ico" alt="X"/>x.com</div>
-      <h3><a href="https://x.com/code_rams/status/2029661481810510175" target="_blank" rel="noopener">code_rams: Codex-related thread</a></h3>
-      <p>Added from Alex’s feed queue for ongoing AI/coding-agent tracking.</p>
-      <div class="link-meta">Added: 2026-03-06</div>
-    </div>
-  </article>
-
-
-  <article class="link-card">
-    <a class="link-thumb" href="https://github.com/TinyAGI/fractals" target="_blank" rel="noopener">
-      <img src="https://www.google.com/s2/favicons?domain=github.com&sz=256" alt="link preview" loading="lazy" style="object-fit:contain;padding:24px;background:#111" />
-    </a>
-    <div class="link-body">
-      <div class="link-domain"><img src="https://www.google.com/s2/favicons?domain=github.com&sz=64" alt="site"/>github.com</div>
-      <h3><a href="https://github.com/TinyAGI/fractals" target="_blank" rel="noopener">New shared link (github.com)</a></h3>
-      <p>Added from Alex’s incoming link stream.</p>
-      <div class="link-meta">Added: 2026-03-06</div>
-    </div>
-  </article>
-</div>
+    <article class="link-row">
+      <div>
+        <h3><a href="https://github.com/TinyAGI/fractals" target="_blank" rel="noopener">fractals</a></h3>
+        <p>Shared GitHub reference saved for further coding-agent exploration.</p>
+      </div>
+      <div class="link-row__meta">
+        <span>github.com</span>
+        <span>Added 2026-03-06</span>
+      </div>
+    </article>
+  </div>
+</section>

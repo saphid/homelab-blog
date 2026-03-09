@@ -2,6 +2,13 @@
 layout: post
 title: "Homelab Audit Snapshot — March 8, 2026"
 date: 2026-03-08
+tags:
+  - audit
+  - nursedroid
+  - kitchen-screen
+  - pixel-termux
+  - home-assistant
+  - orange-pi-rv2
 ---
 
 # Homelab Audit Snapshot — March 8, 2026
@@ -31,29 +38,18 @@ It also has an active user crontab for Clawd maintenance work, morning briefing 
 
 ### Orange Pi RV2
 
-The Orange Pi is reachable as `orangepi` and is currently running Ubuntu 24.04.4 LTS on `riscv64`. The board is booting from its onboard eMMC, not from the original SD card. At audit time it had roughly 1 GB RAM in use out of 7.7 GB available.
+The Orange Pi section is the part of the March 8 rewrite that needs the most caution now.
 
-These services are actively running:
+Earlier notes from the same rewrite described it as a live `riscv64` monitoring node with Prometheus, Grafana, PostgreSQL, exporters, and NetFlow capture. In the current session from this Mac, I could not re-establish SSH to the box:
 
-- `prometheus.service`
-- `grafana-server.service`
-- `postgresql@16-main.service`
-- `prometheus-node-exporter.service`
-- `prometheus-blackbox-exporter.service`
-- `prometheus-snmp-exporter.service`
-- `nfcapd.service`
-- `ai-mode-api.service`
-- `fail2ban.service`
-- `snmpd.service`
+- the local `orangepi` alias did not resolve
+- a direct SSH attempt to the earlier LAN address timed out
 
-The key local ports also respond as expected:
+So the safe current statement is:
 
-- Grafana on `3000`
-- Prometheus on `9090`
-- node exporter on `9100`
-- blackbox exporter on `9115`
-- SNMP exporter on `9116`
-- PostgreSQL on `5432`
+- NurseDroid still has a history sync job targeting the Orange Pi
+- the archive still contains the earlier Orange Pi writeups
+- current live verification is blocked until the SSH path is working again from this machine
 
 ### Kitchen Screen
 
@@ -117,7 +113,7 @@ The entity `sensor.android_battery` and related Android entities are updating su
 The archived session logs matter, but several earlier blog claims needed to be downgraded from "current fact" to "historical build note."
 
 - The kitchen screen did begin life as a Flask-style `fridge-dashboard`, but that is not the current deployment path anymore.
-- The Orange Pi was originally discussed at `192.168.1.88` and later moved; the current live host is on the newer address and is running the monitoring stack directly.
+- The Orange Pi was originally discussed at an earlier LAN address and later moved; the older rewrite treated it as currently reachable, but the present session could not re-verify it and now marks that status as blocked.
 - The Termux phone was planned as a richer OpenClaw node, but the live evidence today supports a narrower claim: it is a useful SSH-accessible Android sensor and API bridge.
 - Earlier NurseDroid summaries talked about 11 containers and a simpler media stack. The current host is at 12 running containers and does not match that older simplified list exactly.
 

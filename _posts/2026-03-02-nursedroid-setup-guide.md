@@ -2,6 +2,9 @@
 layout: post
 title: "Setting Up a Docker Home Server"
 date: 2026-03-02
+tags:
+  - nursedroid
+  - setup-guide
 ---
 
 # Setting Up a Docker Home Server
