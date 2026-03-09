@@ -30,7 +30,7 @@ layout: default
             {% if post.tags and post.tags.size > 0 %}
             <div class="meta-links">
               {% for tag in post.tags %}
-              <a class="meta-link" href="{{ '/tags/#' | append: (tag | slugify) | relative_url }}">{{ tag }}</a>
+              <a class="meta-link" href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>
               {% endfor %}
             </div>
             {% endif %}
@@ -90,10 +90,10 @@ layout: default
     <section class="rail-section">
       <h2>Browse by topic</h2>
       <ul class="plain-list">
-        <li><a href="{{ '/tags/#audit' | relative_url }}">Audit</a></li>
-        <li><a href="{{ '/tags/#setup-guide' | relative_url }}">Setup Guide</a></li>
-        <li><a href="{{ '/tags/#deployment' | relative_url }}">Deployment</a></li>
-        <li><a href="{{ '/tags/#comparison' | relative_url }}">Comparison</a></li>
+        <li><a href="{{ '/tags/' | relative_url }}#audit">Audit</a></li>
+        <li><a href="{{ '/tags/' | relative_url }}#setup-guide">Setup Guide</a></li>
+        <li><a href="{{ '/tags/' | relative_url }}#deployment">Deployment</a></li>
+        <li><a href="{{ '/tags/' | relative_url }}#comparison">Comparison</a></li>
       </ul>
     </section>
   </aside>

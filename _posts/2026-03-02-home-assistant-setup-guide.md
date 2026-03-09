@@ -140,8 +140,8 @@ If any of those fail, fix the broken edge instead of adding another layer of glu
 The audited NurseDroid setup uses a schedule like this:
 
 ```cron
-*/5 * * * * /usr/bin/python3 /home/saphid/clawd/scripts/android-ha-state-sync.py >> /home/saphid/clawd/logs/android-ha-state-sync.log 2>&1
-*/15 * * * * /home/saphid/clawd/scripts/android-ha-stack-health-check.sh >> /home/saphid/clawd/logs/android-ha-stack-health-check.log 2>&1
+*/5 * * * * /usr/bin/python3 ~/clawd/scripts/android-ha-state-sync.py >> ~/clawd/logs/android-ha-state-sync.log 2>&1
+*/15 * * * * ~/clawd/scripts/android-ha-stack-health-check.sh >> ~/clawd/logs/android-ha-stack-health-check.log 2>&1
 ```
 
 ## What I Removed From The Older Version

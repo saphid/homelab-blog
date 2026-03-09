@@ -19,10 +19,10 @@ This note is based on live checks from the control workspace on March 8, 2026. I
 
 The clearest homelab activity in Codex session metadata today was:
 
-- `/Users/alexsouthwell/PersonalCode/kitchenscreen`
-- `/Users/alexsouthwell/PersonalCode/pixelserver`
-- `/Users/alexsouthwell/PersonalCode/skills_building`
-- `/Users/alexsouthwell/PersonalCode/homelab_blog`
+- `kitchenscreen`
+- `pixelserver`
+- `skills_building`
+- `homelab_blog`
 
 That lines up with the systems I could directly re-check from this machine: the kitchen dashboard, the Pixel Termux bridge, the blog publishing path, and NurseDroid as the main service host behind them.
 
@@ -32,16 +32,16 @@ That lines up with the systems I could directly re-check from this machine: the 
 
 NurseDroid is reachable and currently has 12 Docker containers up, including the Immich stack, Grafana, Syncthing, Portainer, FreshRSS, Calibre, and Transmission.
 
-The more important detail is the cron layer around `/home/saphid/clawd`. The active crontab still includes Android-to-Home-Assistant sync, Android stack health checks, phone watchdog checks, OpenClaw runtime checks, and a Home Assistant history sync job aimed at the Orange Pi. That means the box is still doing orchestration work as well as service hosting.
+The more important detail is the cron and script layer around the Clawd workspace. The active crontab still includes Android-to-Home-Assistant sync, Android stack health checks, phone watchdog checks, OpenClaw runtime checks, and a Home Assistant history sync job aimed at the Orange Pi. That means the box is still doing orchestration work as well as service hosting.
 
 ### Pixel 3 in Termux
 
 The Pixel path is live and useful rather than hypothetical.
 
-- SSH identity checks returned `Pixel 3`, device `blueline`, and user `u0_a295`
+- SSH identity checks confirmed the Pixel 3 model and device codename
 - `sshd` is running
 - `android-ha-api.py` is running
-- `http://192.168.1.118:8080/healthz` returned `status=ok`
+- the local health endpoint returned `status=ok`
 
 That is enough to support a narrow but solid claim: the phone is currently operating as an Android sensor and API bridge for the rest of the homelab.
 
@@ -59,7 +59,7 @@ This is the strongest present-tense proof that the kitchen screen is not just an
 
 ## Blockers And Unknowns
 
-The Orange Pi RV2 was not reachable from this workspace during the current audit. The `orangepi` alias did not resolve locally and the direct LAN SSH attempt timed out.
+The Orange Pi RV2 was not reachable from this workspace during the current audit. A saved SSH alias did not resolve locally and the direct LAN SSH attempt timed out.
 
 So the right thing to say is not "the Orange Pi is definitely live." The right thing to say is that older notes exist about it, NurseDroid still has a sync job targeting it, and current live verification is blocked until SSH is working again from this machine.
 
@@ -72,9 +72,9 @@ The kitchen screen, the Pixel bridge, and NurseDroid all still have clear live e
 ## Evidence Commands
 
 ```bash
-ssh -o BatchMode=yes -o ConnectTimeout=8 NurseDroid 'docker ps --format "table {{.Names}}\t{{.Status}}" | sed -n "1,20p"'
-ssh -o BatchMode=yes -o ConnectTimeout=8 pixel-floor 'whoami; getprop ro.product.model; getprop ro.product.device; pgrep -x sshd; pgrep -af android-ha-api.py || true'
-curl -fsS http://192.168.1.118:8080/healthz
-ssh -o BatchMode=yes -o ConnectTimeout=8 kitchenscreen@192.168.1.143 'curl -fsS http://127.0.0.1:8126/health'
-ssh -o BatchMode=yes -o ConnectTimeout=8 kitchenscreen@192.168.1.143 'curl -fsS http://127.0.0.1:8126/api/home_summary | head -c 600'
+ssh -o BatchMode=yes -o ConnectTimeout=8 <main-host> 'docker ps --format "table {{.Names}}\t{{.Status}}" | sed -n "1,20p"'
+ssh -o BatchMode=yes -o ConnectTimeout=8 <android-bridge> 'getprop ro.product.model; getprop ro.product.device; pgrep -x sshd; pgrep -af android-ha-api.py || true'
+curl -fsS http://<android-bridge>:8080/healthz
+ssh -o BatchMode=yes -o ConnectTimeout=8 <kitchen-screen-host> 'curl -fsS http://127.0.0.1:8126/health'
+ssh -o BatchMode=yes -o ConnectTimeout=8 <kitchen-screen-host> 'curl -fsS http://127.0.0.1:8126/api/home_summary | head -c 600'
 ```

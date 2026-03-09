@@ -42,7 +42,7 @@ The Orange Pi section is the part of the March 8 rewrite that needs the most cau
 
 Earlier notes from the same rewrite described it as a live `riscv64` monitoring node with Prometheus, Grafana, PostgreSQL, exporters, and NetFlow capture. In the current session from this Mac, I could not re-establish SSH to the box:
 
-- the local `orangepi` alias did not resolve
+- a saved SSH alias for the Orange Pi did not resolve
 - a direct SSH attempt to the earlier LAN address timed out
 
 So the safe current statement is:

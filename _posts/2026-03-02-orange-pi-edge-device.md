@@ -16,7 +16,7 @@ The Orange Pi RV2 stopped being just a competition curiosity. It is now a real m
 
 At audit time the board was:
 
-- reachable live as `orangepi`
+- reachable live through a saved SSH target
 - running Ubuntu 24.04.4 LTS on `riscv64`
 - booting from onboard eMMC
 - using about 1 GB RAM out of 7.7 GB available

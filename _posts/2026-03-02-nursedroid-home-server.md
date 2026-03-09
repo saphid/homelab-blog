@@ -52,7 +52,7 @@ Monitoring is split across machines rather than being cleanly isolated. Grafana 
 
 ## Clawd Operational Layer
 
-The most interesting part of NurseDroid is not just Docker. It is the script and cron layer around `/home/saphid/clawd`.
+The most interesting part of NurseDroid is not just Docker. It is the script and cron layer around the `~/clawd` workspace.
 
 The active user crontab currently includes:
 
